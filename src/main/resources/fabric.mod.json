@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "smart_recipes",
+  "version": "${version}",
+  "name": "Smart Recipes",
+  "description": "Anyone can cook",
+  "authors": [
+    "Kir_Antipov"
+  ],
+  "contact": {
+    "website": "https://github.com/Kir-Antipov/smart-recipes",
+    "repo": "https://github.com/Kir-Antipov/smart-recipes",
+    "issues": "https://github.com/Kir-Antipov/smart-recipes/issues/new/choose"
+  },
+  "license": "MIT",
+  "icon": "assets/smart_recipes/icon.png",
+  "environment": "*",
+  "entrypoints": {
+  },
+  "mixins": [
+    "smart_recipes.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "fabricloader": "${fabric}",
+    "minecraft": "${minecraft}",
+    "java": ">=16"
+  }
+}
