@@ -1,0 +1,15 @@
+pluginManagement {
+    repositories {
+        maven {
+            name = "Fabric"
+            url = "https://maven.fabricmc.net/"
+        }
+        maven {
+            name = "grgit"
+            url = "https://ajoberstar.org/bintray-backup/"
+        }
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = "smartrecipes"
