@@ -21,6 +21,12 @@ public interface RecipeCondition {
     RecipeCondition NONE = register("none", RecipeConditions.NONE);
 
 
+    RecipeCondition ENTRIES_REGISTERED = register("entries_registered", RecipeConditions.ENTRIES_REGISTERED);
+    RecipeCondition BLOCKS_REGISTERED = register("blocks_registered", RecipeConditions.BLOCKS_REGISTERED);
+    RecipeCondition ITEMS_REGISTERED = register("items_registered", RecipeConditions.ITEMS_REGISTERED);
+    RecipeCondition BLOCK_ENTITIES_REGISTERED = register("block_entities_registered", RecipeConditions.BLOCK_ENTITIES_REGISTERED);
+
+
     default Identifier getId() {
         return RecipeConditions.REGISTRY.getId(this);
     }

@@ -84,6 +84,18 @@ final class RecipeConditions {
     public static final RecipeCondition NONE = (e, i) -> test(e, i).noneMatch(x -> x);
 
 
+    public static final RecipeCondition ENTRIES_REGISTERED = (e, i) -> JsonUtil.flatMap(e, RegistryEntry::parse, RegistryEntry::parse).allMatch(x -> {
+        Registry<?> registry = Registry.REGISTRIES.get(new Identifier(x.registry()));
+        return registry != null && registry.containsId(new Identifier(x.entry()));
+    });
+
+    public static final RecipeCondition BLOCKS_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registry.BLOCK.containsId(new Identifier(x.getAsString())));
+
+    public static final RecipeCondition ITEMS_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registry.ITEM.containsId(new Identifier(x.getAsString())));
+
+    public static final RecipeCondition BLOCK_ENTITIES_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registry.BLOCK_ENTITY_TYPE.containsId(new Identifier(x.getAsString())));
+
+
     private static Stream<Boolean> test(JsonElement element, RecipeInfo info) {
         if (RecipeCondition.isConditionBody(element)) {
             return Stream.of(RecipeCondition.test((JsonObject)element, info));
