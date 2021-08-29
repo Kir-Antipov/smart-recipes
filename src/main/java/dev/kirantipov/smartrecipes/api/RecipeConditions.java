@@ -84,6 +84,12 @@ final class RecipeConditions {
     public static final RecipeCondition NONE = (e, i) -> test(e, i).noneMatch(x -> x);
 
 
+    public static final ContextualRecipeCondition PLAYERS_ONLINE = (e, ctx) -> {
+        List<String> names = Arrays.asList(ctx.getServer().getPlayerNames());
+        return JsonUtil.flatMap(e).allMatch(x -> names.contains(x.getAsString()));
+    };
+
+
     public static final RecipeCondition ENTRIES_REGISTERED = (e, i) -> JsonUtil.flatMap(e, RegistryEntry::parse, RegistryEntry::parse).allMatch(x -> {
         Registry<?> registry = Registry.REGISTRIES.get(new Identifier(x.registry()));
         return registry != null && registry.containsId(new Identifier(x.entry()));

@@ -20,6 +20,7 @@ public interface RecipeCondition {
     RecipeCondition ALL = register("all", RecipeConditions.ALL);
     RecipeCondition NONE = register("none", RecipeConditions.NONE);
 
+    ContextualRecipeCondition PLAYERS_ONLINE = register("players_online", RecipeConditions.PLAYERS_ONLINE);
 
     RecipeCondition ENTRIES_REGISTERED = register("entries_registered", RecipeConditions.ENTRIES_REGISTERED);
     RecipeCondition BLOCKS_REGISTERED = register("blocks_registered", RecipeConditions.BLOCKS_REGISTERED);
