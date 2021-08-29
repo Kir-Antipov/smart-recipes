@@ -9,6 +9,10 @@ import org.jetbrains.annotations.Nullable;
 
 @FunctionalInterface
 public interface RecipeCondition {
+    RecipeCondition FALSE = register("false", RecipeConditions.FALSE);
+    RecipeCondition TRUE = register("true", RecipeConditions.TRUE);
+
+
     default Identifier getId() {
         return RecipeConditions.REGISTRY.getId(this);
     }
