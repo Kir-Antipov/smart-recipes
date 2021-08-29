@@ -84,6 +84,19 @@ final class RecipeConditions {
     public static final RecipeCondition NONE = (e, i) -> test(e, i).noneMatch(x -> x);
 
 
+    public static final ContextualRecipeCondition IS_HARDCORE = (e, ctx) -> ctx.getServer().isHardcore();
+
+    public static final ContextualRecipeCondition DIFFICULTY_CHECK = (e, ctx) -> JsonUtil.flatMap(e).map(RecipeConditions::parseDifficulty).anyMatch(ctx.getServer().getSaveProperties().getDifficulty()::equals);
+
+    public static final ContextualRecipeCondition IS_PEACEFUL_DIFFICULTY = (e, ctx) -> Difficulty.PEACEFUL.equals(ctx.getServer().getSaveProperties().getDifficulty());
+
+    public static final ContextualRecipeCondition IS_EASY_DIFFICULTY = (e, ctx) -> Difficulty.EASY.equals(ctx.getServer().getSaveProperties().getDifficulty());
+
+    public static final ContextualRecipeCondition IS_NORMAL_DIFFICULTY = (e, ctx) -> Difficulty.NORMAL.equals(ctx.getServer().getSaveProperties().getDifficulty());
+
+    public static final ContextualRecipeCondition IS_HARD_DIFFICULTY = (e, ctx) -> Difficulty.HARD.equals(ctx.getServer().getSaveProperties().getDifficulty());
+
+
     public static final ContextualRecipeCondition GAMEMODE_CHECK = (e, ctx) -> JsonUtil.flatMap(e).map(RecipeConditions::parseGameMode).anyMatch(ctx.getServer().getDefaultGameMode()::equals);
 
     public static final ContextualRecipeCondition IS_SURVIVAL = (e, ctx) -> GameMode.SURVIVAL.equals(ctx.getServer().getDefaultGameMode());
@@ -145,6 +158,10 @@ final class RecipeConditions {
         }
 
         return Stream.of(JsonUtil.asBoolean(element));
+    }
+
+    private static Difficulty parseDifficulty(JsonPrimitive jsonPrimitive) {
+        return jsonPrimitive.isNumber() ? Difficulty.byOrdinal(jsonPrimitive.getAsInt()) : Difficulty.byName(jsonPrimitive.getAsString().toLowerCase());
     }
 
     private static GameMode parseGameMode(JsonPrimitive jsonPrimitive) {

@@ -20,6 +20,13 @@ public interface RecipeCondition {
     RecipeCondition ALL = register("all", RecipeConditions.ALL);
     RecipeCondition NONE = register("none", RecipeConditions.NONE);
 
+    ContextualRecipeCondition IS_HARDCORE = register("is_hardcore", RecipeConditions.IS_HARDCORE);
+    ContextualRecipeCondition DIFFICULTY_CHECK = register("difficulty_check", RecipeConditions.DIFFICULTY_CHECK);
+    ContextualRecipeCondition IS_PEACEFUL_DIFFICULTY = register("is_peaceful_difficulty", RecipeConditions.IS_PEACEFUL_DIFFICULTY);
+    ContextualRecipeCondition IS_EASY_DIFFICULTY = register("is_easy_difficulty", RecipeConditions.IS_EASY_DIFFICULTY);
+    ContextualRecipeCondition IS_NORMAL_DIFFICULTY = register("is_normal_difficulty", RecipeConditions.IS_NORMAL_DIFFICULTY);
+    ContextualRecipeCondition IS_HARD_DIFFICULTY = register("is_hard_difficulty", RecipeConditions.IS_HARD_DIFFICULTY);
+
     ContextualRecipeCondition GAMEMODE_CHECK = register("gamemode_check", RecipeConditions.GAMEMODE_CHECK);
     ContextualRecipeCondition IS_SURVIVAL = register("is_survival", RecipeConditions.IS_SURVIVAL);
     ContextualRecipeCondition IS_CREATIVE = register("is_creative", RecipeConditions.IS_CREATIVE);
