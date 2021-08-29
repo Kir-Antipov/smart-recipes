@@ -26,6 +26,8 @@ public interface RecipeCondition {
     RecipeCondition ITEMS_REGISTERED = register("items_registered", RecipeConditions.ITEMS_REGISTERED);
     RecipeCondition BLOCK_ENTITIES_REGISTERED = register("block_entities_registered", RecipeConditions.BLOCK_ENTITIES_REGISTERED);
 
+    RecipeCondition MODS_LOADED = register("fabric:mods_loaded", RecipeConditions.MODS_LOADED);
+
 
     default Identifier getId() {
         return RecipeConditions.REGISTRY.getId(this);

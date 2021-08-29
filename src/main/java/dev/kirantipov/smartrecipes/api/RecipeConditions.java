@@ -96,6 +96,20 @@ final class RecipeConditions {
     public static final RecipeCondition BLOCK_ENTITIES_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registry.BLOCK_ENTITY_TYPE.containsId(new Identifier(x.getAsString())));
 
 
+    public static final RecipeCondition MODS_LOADED = (e, i) -> JsonUtil.flatMap(e, ModEntry::parse, ModEntry::parse).allMatch(x -> {
+        ModContainer mod = FabricLoader.getInstance().getModContainer(x.id()).orElse(null);
+        if (mod == null) {
+            return false;
+        }
+
+        try {
+            return VersionPredicateParser.matches(mod.getMetadata().getVersion(), x.version());
+        } catch (Throwable ex) {
+            throw new RuntimeException(ex);
+        }
+    });
+
+
     private static Stream<Boolean> test(JsonElement element, RecipeInfo info) {
         if (RecipeCondition.isConditionBody(element)) {
             return Stream.of(RecipeCondition.test((JsonObject)element, info));
