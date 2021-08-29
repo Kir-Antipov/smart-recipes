@@ -12,6 +12,14 @@ public interface RecipeCondition {
     RecipeCondition FALSE = register("false", RecipeConditions.FALSE);
     RecipeCondition TRUE = register("true", RecipeConditions.TRUE);
 
+    RecipeCondition OR = register("or", RecipeConditions.OR);
+    RecipeCondition AND = register("and", RecipeConditions.AND);
+    RecipeCondition NOT = register("not", RecipeConditions.NOT);
+
+    RecipeCondition ANY = register("any", RecipeConditions.ANY);
+    RecipeCondition ALL = register("all", RecipeConditions.ALL);
+    RecipeCondition NONE = register("none", RecipeConditions.NONE);
+
 
     default Identifier getId() {
         return RecipeConditions.REGISTRY.getId(this);

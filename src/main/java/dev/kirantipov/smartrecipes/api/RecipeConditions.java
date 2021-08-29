@@ -29,4 +29,78 @@ final class RecipeConditions {
     public static final RecipeCondition FALSE = (e, i) -> false;
 
     public static final RecipeCondition TRUE = (e, i) -> true;
+
+
+    public static final RecipeCondition OR = (e, i) -> {
+        Iterator<Boolean> iterator = test(e, i).iterator();
+        if (!iterator.hasNext()) {
+            throw new JsonSyntaxException("The OR operator requires at least one argument. Consider using ANY instead.");
+        }
+
+        do {
+            if (iterator.next()) {
+                return true;
+            }
+        } while (iterator.hasNext());
+
+        return false;
+    };
+
+    public static final RecipeCondition AND = (e, i) -> {
+        Iterator<Boolean> iterator = test(e, i).iterator();
+        if (!iterator.hasNext()) {
+            throw new JsonSyntaxException("The AND operator requires at least one argument. Consider using ALL instead.");
+        }
+
+        do {
+            if (!iterator.next()) {
+                return false;
+            }
+        } while (iterator.hasNext());
+
+        return true;
+    };
+
+    public static final RecipeCondition NOT = (e, i) -> {
+        Iterator<Boolean> iterator = test(e, i).iterator();
+        if (!iterator.hasNext()) {
+            throw new JsonSyntaxException("The NOT operator requires at least one argument. Consider using NONE instead.");
+        }
+
+        do {
+            if (iterator.next()) {
+                return false;
+            }
+        } while (iterator.hasNext());
+
+        return true;
+    };
+
+
+    public static final RecipeCondition ANY = (e, i) -> test(e, i).anyMatch(x -> x);
+
+    public static final RecipeCondition ALL = (e, i) -> test(e, i).allMatch(x -> x);
+
+    public static final RecipeCondition NONE = (e, i) -> test(e, i).noneMatch(x -> x);
+
+
+    private static Stream<Boolean> test(JsonElement element, RecipeInfo info) {
+        if (RecipeCondition.isConditionBody(element)) {
+            return Stream.of(RecipeCondition.test((JsonObject)element, info));
+        }
+
+        if (element instanceof JsonObject jsonObject) {
+            return jsonObject.entrySet().stream().map(entry -> RecipeCondition.test(entry.getKey(), entry.getValue(), info));
+        }
+
+        if (element instanceof JsonArray jsonArray) {
+            return StreamSupport.stream(jsonArray.spliterator(), false).flatMap(e -> test(e, info));
+        }
+
+        if (element instanceof JsonPrimitive primitive && primitive.isString()) {
+            return Stream.of(RecipeCondition.test(primitive.getAsString(), null, info));
+        }
+
+        return Stream.of(JsonUtil.asBoolean(element));
+    }
 }
