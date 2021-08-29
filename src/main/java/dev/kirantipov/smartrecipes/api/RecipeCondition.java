@@ -33,6 +33,8 @@ public interface RecipeCondition {
     ContextualRecipeCondition IS_ADVENTURE = register("is_adventure", RecipeConditions.IS_ADVENTURE);
     ContextualRecipeCondition IS_SPECTATOR = register("is_spectator", RecipeConditions.IS_SPECTATOR);
 
+    ContextualRecipeCondition WEATHER_CHECK = register("weather_check", RecipeConditions.WEATHER_CHECK);
+
     ContextualRecipeCondition PLAYERS_ONLINE = register("players_online", RecipeConditions.PLAYERS_ONLINE);
 
     RecipeCondition ENTRIES_REGISTERED = register("entries_registered", RecipeConditions.ENTRIES_REGISTERED);

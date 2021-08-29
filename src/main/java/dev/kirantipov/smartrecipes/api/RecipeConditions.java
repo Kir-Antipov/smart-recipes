@@ -108,6 +108,31 @@ final class RecipeConditions {
     public static final ContextualRecipeCondition IS_SPECTATOR = (e, ctx) -> GameMode.SPECTATOR.equals(ctx.getServer().getDefaultGameMode());
 
 
+    public static final ContextualRecipeCondition WEATHER_CHECK = (e, ctx) -> {
+        boolean clear = false;
+        boolean rain = false;
+        boolean thunder = false;
+
+        for (String weatherId : (Iterable<String>)JsonUtil.flatMap(e).map(JsonPrimitive::getAsString)::iterator) {
+            weatherId = weatherId.toLowerCase();
+            if (weatherId.startsWith("clea")) {
+                clear = true;
+            } else if (weatherId.startsWith("rain")) {
+                rain = true;
+            } else if (weatherId.startsWith("thunder")) {
+                thunder = true;
+            }
+        }
+
+        WorldProperties worldProperties = ctx.getServer().getOverworld().getLevelProperties();
+        return (
+            clear && !worldProperties.isRaining() ||
+            rain && worldProperties.isRaining() ||
+            thunder && worldProperties.isThundering()
+        );
+    };
+
+
     public static final ContextualRecipeCondition PLAYERS_ONLINE = (e, ctx) -> {
         List<String> names = Arrays.asList(ctx.getServer().getPlayerNames());
         return JsonUtil.flatMap(e).allMatch(x -> names.contains(x.getAsString()));
