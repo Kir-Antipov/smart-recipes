@@ -84,6 +84,17 @@ final class RecipeConditions {
     public static final RecipeCondition NONE = (e, i) -> test(e, i).noneMatch(x -> x);
 
 
+    public static final ContextualRecipeCondition GAMEMODE_CHECK = (e, ctx) -> JsonUtil.flatMap(e).map(RecipeConditions::parseGameMode).anyMatch(ctx.getServer().getDefaultGameMode()::equals);
+
+    public static final ContextualRecipeCondition IS_SURVIVAL = (e, ctx) -> GameMode.SURVIVAL.equals(ctx.getServer().getDefaultGameMode());
+
+    public static final ContextualRecipeCondition IS_CREATIVE = (e, ctx) -> GameMode.CREATIVE.equals(ctx.getServer().getDefaultGameMode());
+
+    public static final ContextualRecipeCondition IS_ADVENTURE = (e, ctx) -> GameMode.ADVENTURE.equals(ctx.getServer().getDefaultGameMode());
+
+    public static final ContextualRecipeCondition IS_SPECTATOR = (e, ctx) -> GameMode.SPECTATOR.equals(ctx.getServer().getDefaultGameMode());
+
+
     public static final ContextualRecipeCondition PLAYERS_ONLINE = (e, ctx) -> {
         List<String> names = Arrays.asList(ctx.getServer().getPlayerNames());
         return JsonUtil.flatMap(e).allMatch(x -> names.contains(x.getAsString()));
@@ -134,5 +145,9 @@ final class RecipeConditions {
         }
 
         return Stream.of(JsonUtil.asBoolean(element));
+    }
+
+    private static GameMode parseGameMode(JsonPrimitive jsonPrimitive) {
+        return jsonPrimitive.isNumber() ? GameMode.byId(jsonPrimitive.getAsInt()) : GameMode.byName(jsonPrimitive.getAsString().toLowerCase());
     }
 }

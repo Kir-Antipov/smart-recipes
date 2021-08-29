@@ -20,6 +20,12 @@ public interface RecipeCondition {
     RecipeCondition ALL = register("all", RecipeConditions.ALL);
     RecipeCondition NONE = register("none", RecipeConditions.NONE);
 
+    ContextualRecipeCondition GAMEMODE_CHECK = register("gamemode_check", RecipeConditions.GAMEMODE_CHECK);
+    ContextualRecipeCondition IS_SURVIVAL = register("is_survival", RecipeConditions.IS_SURVIVAL);
+    ContextualRecipeCondition IS_CREATIVE = register("is_creative", RecipeConditions.IS_CREATIVE);
+    ContextualRecipeCondition IS_ADVENTURE = register("is_adventure", RecipeConditions.IS_ADVENTURE);
+    ContextualRecipeCondition IS_SPECTATOR = register("is_spectator", RecipeConditions.IS_SPECTATOR);
+
     ContextualRecipeCondition PLAYERS_ONLINE = register("players_online", RecipeConditions.PLAYERS_ONLINE);
 
     RecipeCondition ENTRIES_REGISTERED = register("entries_registered", RecipeConditions.ENTRIES_REGISTERED);
