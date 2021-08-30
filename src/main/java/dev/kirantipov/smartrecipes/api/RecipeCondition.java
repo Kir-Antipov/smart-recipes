@@ -34,6 +34,7 @@ public interface RecipeCondition {
     ContextualRecipeCondition IS_SPECTATOR = register("is_spectator", RecipeConditions.IS_SPECTATOR);
 
     ContextualRecipeCondition WEATHER_CHECK = register("weather_check", RecipeConditions.WEATHER_CHECK);
+    ContextualRecipeCondition TIME_CHECK = register("time_check", RecipeConditions.TIME_CHECK);
 
     ContextualRecipeCondition PLAYERS_ONLINE = register("players_online", RecipeConditions.PLAYERS_ONLINE);
 

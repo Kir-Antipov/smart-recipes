@@ -132,6 +132,11 @@ final class RecipeConditions {
         );
     };
 
+    public static final ContextualRecipeCondition TIME_CHECK = (e, ctx) -> {
+        TimeOfDay time = TimeOfDay.fromTime(ctx.getServer().getOverworld().getTimeOfDay());
+        return JsonUtil.flatMap(e).map(RecipeConditions::parseTimeOfDay).anyMatch(x -> x.contains(time));
+    };
+
 
     public static final ContextualRecipeCondition PLAYERS_ONLINE = (e, ctx) -> {
         List<String> names = Arrays.asList(ctx.getServer().getPlayerNames());
@@ -191,5 +196,9 @@ final class RecipeConditions {
 
     private static GameMode parseGameMode(JsonPrimitive jsonPrimitive) {
         return jsonPrimitive.isNumber() ? GameMode.byId(jsonPrimitive.getAsInt()) : GameMode.byName(jsonPrimitive.getAsString().toLowerCase());
+    }
+
+    private static TimeOfDay parseTimeOfDay(JsonPrimitive jsonPrimitive) {
+        return jsonPrimitive.isNumber() ? TimeOfDay.fromTime(jsonPrimitive.getAsLong()) : TimeOfDay.byName(jsonPrimitive.getAsString().toLowerCase());
     }
 }
