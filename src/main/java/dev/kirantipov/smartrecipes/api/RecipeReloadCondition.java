@@ -6,6 +6,9 @@ import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 public interface RecipeReloadCondition {
+    RecipeReloadCondition END_DATA_PACK_RELOAD = register("end_data_pack_reload", RecipeReloadConditions.END_DATA_PACK_RELOAD);
+
+
     default Identifier getId() {
         return RecipeReloadConditions.REGISTRY.getId(this);
     }

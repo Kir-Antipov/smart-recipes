@@ -17,6 +17,8 @@ final class RecipeReloadConditions {
     public static final Registry<RecipeReloadCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental());
 
 
+    public static final RecipeReloadCondition END_DATA_PACK_RELOAD = create(ServerLifecycleEvents.END_DATA_PACK_RELOAD, ServerLifecycleEvents.SERVER_STARTED, (e, c) -> e.register((s, __, ___) -> c.invoker().onRecipeReloadEvent(s, c.getId())), (e, c) -> e.register(s -> c.invoker().onRecipeReloadEvent(s, c.getId())));
+
     private static <T> RecipeReloadCondition create(Event<T> parentEvent, BiConsumer<Event<T>, RecipeReloadCondition> consumer) {
         RecipeReloadCondition reloadCondition = create();
         consumer.accept(parentEvent, reloadCondition);
