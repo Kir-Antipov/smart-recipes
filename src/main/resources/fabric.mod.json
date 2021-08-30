@@ -16,6 +16,7 @@
   "icon": "assets/smart_recipes/icon.png",
   "environment": "*",
   "entrypoints": {
+    "client": ["dev.kirantipov.smartrecipes.SmartRecipes"]
   },
   "mixins": [
     "smart_recipes.mixins.json"
