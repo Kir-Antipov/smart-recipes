@@ -10,6 +10,7 @@ public interface RecipeReloadCondition {
     RecipeReloadCondition PLAYER_JOINED = register("player_joined", RecipeReloadConditions.PLAYER_JOINED);
     RecipeReloadCondition PLAYER_DISCONNECTED = register("player_disconnected", RecipeReloadConditions.PLAYER_DISCONNECTED);
     RecipeReloadCondition DIFFICULTY_CHANGED = register("difficulty_changed", RecipeReloadConditions.DIFFICULTY_CHANGED);
+    RecipeReloadCondition GAMEMODE_CHANGED = register("gamemode_changed", RecipeReloadConditions.GAMEMODE_CHANGED);
     RecipeReloadCondition WEATHER_CHANGED = register("weather_changed", RecipeReloadConditions.WEATHER_CHANGED);
     RecipeReloadCondition TIME_CHANGED = register("time_changed", RecipeReloadConditions.TIME_CHANGED);
 

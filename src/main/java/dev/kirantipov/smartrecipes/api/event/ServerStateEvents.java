@@ -15,8 +15,19 @@ public final class ServerStateEvents {
         }
     });
 
+    public static final Event<GameModeChanged> GAMEMODE_CHANGED = EventFactory.createArrayBacked(GameModeChanged.class, callbacks -> (server, oldGameMode, newGameMode) -> {
+        for (GameModeChanged callback : callbacks) {
+            callback.onGameModeChanged(server, oldGameMode, newGameMode);
+        }
+    });
+
     @FunctionalInterface
     public interface DifficultyChanged {
         void onDifficultyChanged(MinecraftServer server, Difficulty oldDifficulty, Difficulty newDifficulty);
+    }
+
+    @FunctionalInterface
+    public interface GameModeChanged {
+        void onGameModeChanged(MinecraftServer server, GameMode oldGameMode, GameMode newGameMode);
     }
 }

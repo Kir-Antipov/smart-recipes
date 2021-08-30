@@ -34,9 +34,13 @@ abstract class MinecraftServerMixin {
     @Unique
     private Difficulty difficulty;
 
+    @Unique
+    private GameMode gameMode;
+
     @Inject(method = "<init>", at = @At("RETURN"))
     private void init(Thread serverThread, DynamicRegistryManager.Impl registryManager, LevelStorage.Session session, SaveProperties saveProperties, ResourcePackManager dataPackManager, Proxy proxy, DataFixer dataFixer, ServerResourceManager serverResourceManager, MinecraftSessionService sessionService, GameProfileRepository gameProfileRepo, UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) {
         this.difficulty = saveProperties.getDifficulty();
+        this.gameMode = saveProperties.getGameMode();
     }
 
     @Inject(method = "tick", at = @At("RETURN"))
@@ -46,6 +50,11 @@ abstract class MinecraftServerMixin {
         if (this.difficulty != this.saveProperties.getDifficulty()) {
             ServerStateEvents.DIFFICULTY_CHANGED.invoker().onDifficultyChanged(server, this.difficulty, this.saveProperties.getDifficulty());
             this.difficulty = this.saveProperties.getDifficulty();
+        }
+
+        if (this.gameMode != this.saveProperties.getGameMode()) {
+            ServerStateEvents.GAMEMODE_CHANGED.invoker().onGameModeChanged(server, this.gameMode, this.saveProperties.getGameMode());
+            this.gameMode = this.saveProperties.getGameMode();
         }
     }
 }

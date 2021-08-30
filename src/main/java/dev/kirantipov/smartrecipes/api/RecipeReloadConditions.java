@@ -27,6 +27,8 @@ final class RecipeReloadConditions {
 
     public static final RecipeReloadCondition DIFFICULTY_CHANGED = create(ServerStateEvents.DIFFICULTY_CHANGED, (e, c) -> e.register((s, __, ___) -> c.invoker().onRecipeReloadEvent(s, c.getId())));
 
+    public static final RecipeReloadCondition GAMEMODE_CHANGED = create(ServerStateEvents.GAMEMODE_CHANGED, (e, c) -> e.register((s, __, ___) -> c.invoker().onRecipeReloadEvent(s, c.getId())));
+
     public static final RecipeReloadCondition WEATHER_CHANGED = create(WorldStateEvents.WEATHER_CHANGED, (e, c) -> e.register(w -> c.invoker().onRecipeReloadEvent(w.getServer(), c.getId())));
 
     public static final RecipeReloadCondition TIME_CHANGED = create(WorldStateEvents.TIME_CHANGED, (e, c) -> e.register((w, __, ___) -> c.invoker().onRecipeReloadEvent(w.getServer(), c.getId())));
