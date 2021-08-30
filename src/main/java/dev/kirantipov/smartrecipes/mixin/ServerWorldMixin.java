@@ -39,6 +39,9 @@ abstract class ServerWorldMixin extends World {
     @Unique
     private boolean wasThundering;
 
+    @Unique
+    private TimeOfDay timeOfDay;
+
     private ServerWorldMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, DimensionType dimensionType, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long seed) {
         super(properties, registryRef, dimensionType, profiler, isClient, debugWorld, seed);
     }
@@ -47,6 +50,7 @@ abstract class ServerWorldMixin extends World {
     private void init(MinecraftServer server, Executor workerExecutor, LevelStorage.Session session, ServerWorldProperties properties, RegistryKey<World> worldKey, DimensionType dimensionType, WorldGenerationProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean debugWorld, long seed, List<Spawner> spawners, boolean shouldTickTime, CallbackInfo ci) {
         this.wasRaining = properties.isRaining();
         this.wasThundering = properties.isThundering();
+        this.timeOfDay = TimeOfDay.fromTime(properties.getTimeOfDay());
     }
 
     @Inject(method = "tick", at = @At("RETURN"))
@@ -55,6 +59,15 @@ abstract class ServerWorldMixin extends World {
             WorldStateEvents.WEATHER_CHANGED.invoker().onWeatherChanged((ServerWorld)(Object)this);
             this.wasRaining = this.worldProperties.isRaining();
             this.wasThundering = this.worldProperties.isThundering();
+        }
+    }
+
+    @Inject(method = "setTimeOfDay", at = @At("RETURN"))
+    private void setTimeOfDay(long time, CallbackInfo ci) {
+        TimeOfDay newTimeOfDay = TimeOfDay.fromTime(time);
+        if (this.timeOfDay != newTimeOfDay) {
+            WorldStateEvents.TIME_CHANGED.invoker().onTimeOfDayChanged((ServerWorld)(Object)this, this.timeOfDay, newTimeOfDay);
+            this.timeOfDay = newTimeOfDay;
         }
     }
 }

@@ -10,6 +10,7 @@ public interface RecipeReloadCondition {
     RecipeReloadCondition PLAYER_JOINED = register("player_joined", RecipeReloadConditions.PLAYER_JOINED);
     RecipeReloadCondition PLAYER_DISCONNECTED = register("player_disconnected", RecipeReloadConditions.PLAYER_DISCONNECTED);
     RecipeReloadCondition WEATHER_CHANGED = register("weather_changed", RecipeReloadConditions.WEATHER_CHANGED);
+    RecipeReloadCondition TIME_CHANGED = register("time_changed", RecipeReloadConditions.TIME_CHANGED);
 
 
     default Identifier getId() {

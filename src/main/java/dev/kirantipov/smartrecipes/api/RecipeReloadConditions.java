@@ -26,6 +26,8 @@ final class RecipeReloadConditions {
 
     public static final RecipeReloadCondition WEATHER_CHANGED = create(WorldStateEvents.WEATHER_CHANGED, (e, c) -> e.register(w -> c.invoker().onRecipeReloadEvent(w.getServer(), c.getId())));
 
+    public static final RecipeReloadCondition TIME_CHANGED = create(WorldStateEvents.TIME_CHANGED, (e, c) -> e.register((w, __, ___) -> c.invoker().onRecipeReloadEvent(w.getServer(), c.getId())));
+
 
     private static <T> RecipeReloadCondition create(Event<T> parentEvent, BiConsumer<Event<T>, RecipeReloadCondition> consumer) {
         RecipeReloadCondition reloadCondition = create();
