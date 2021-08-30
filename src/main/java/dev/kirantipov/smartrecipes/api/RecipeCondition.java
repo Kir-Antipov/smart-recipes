@@ -12,6 +12,9 @@ public interface RecipeCondition {
     RecipeCondition FALSE = register("false", RecipeConditions.FALSE);
     RecipeCondition TRUE = register("true", RecipeConditions.TRUE);
 
+    RecipeCondition COMMENT = register("comment", RecipeConditions.COMMENT);
+    RecipeCondition _COMMENT = register("_comment", RecipeConditions._COMMENT);
+
     RecipeCondition OR = register("or", RecipeConditions.OR);
     RecipeCondition AND = register("and", RecipeConditions.AND);
     RecipeCondition NOT = register("not", RecipeConditions.NOT);

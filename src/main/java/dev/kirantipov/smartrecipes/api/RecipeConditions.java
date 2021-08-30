@@ -31,6 +31,11 @@ final class RecipeConditions {
     public static final RecipeCondition TRUE = (e, i) -> true;
 
 
+    public static final RecipeCondition COMMENT = (e, i) -> true;
+
+    public static final RecipeCondition _COMMENT = (e, i) -> false;
+
+
     public static final RecipeCondition OR = (e, i) -> {
         Iterator<Boolean> iterator = test(e, i).iterator();
         if (!iterator.hasNext()) {
