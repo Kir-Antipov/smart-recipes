@@ -65,7 +65,7 @@ publishing {
 
             pom {
                 name = "Smart Recipes"
-                description = "A Fabric Minecraft API mod which expands recipes with conditions."
+                description = "A Fabric mod which extends recipe format with conditions."
             }
         }
     }
