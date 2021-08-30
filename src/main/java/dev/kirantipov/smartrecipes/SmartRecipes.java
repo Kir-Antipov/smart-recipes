@@ -1,5 +1,6 @@
 package dev.kirantipov.smartrecipes;
 
+import dev.kirantipov.smartrecipes.api.networking.SmartRecipesPackets;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -18,5 +19,6 @@ public class SmartRecipes implements ClientModInitializer {
     @Override
     @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
+        SmartRecipesPackets.initClient();
     }
 }

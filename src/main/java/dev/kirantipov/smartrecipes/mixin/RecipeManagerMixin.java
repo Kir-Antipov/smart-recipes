@@ -5,7 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.kirantipov.smartrecipes.SmartRecipes;
 import dev.kirantipov.smartrecipes.api.*;
+import dev.kirantipov.smartrecipes.api.networking.SynchronizeReloadedRecipesPacket;
 import dev.kirantipov.smartrecipes.util.JsonUtil;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
@@ -119,6 +121,7 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
 
         if (reloaded != 0) {
             this.apply(diff);
+            new SynchronizeReloadedRecipesPacket(diff).send(PlayerLookup.all(server).stream());
             SmartRecipes.LOGGER.info("Reloaded {} recipes (removed: {} | added: {}) on the '{}' event", reloaded, removed, added, cause);
         }
     }
