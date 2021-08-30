@@ -7,6 +7,8 @@ import org.jetbrains.annotations.Nullable;
 
 public interface RecipeReloadCondition {
     RecipeReloadCondition END_DATA_PACK_RELOAD = register("end_data_pack_reload", RecipeReloadConditions.END_DATA_PACK_RELOAD);
+    RecipeReloadCondition PLAYER_JOINED = register("player_joined", RecipeReloadConditions.PLAYER_JOINED);
+    RecipeReloadCondition PLAYER_DISCONNECTED = register("player_disconnected", RecipeReloadConditions.PLAYER_DISCONNECTED);
 
 
     default Identifier getId() {
