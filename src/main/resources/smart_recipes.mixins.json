@@ -4,6 +4,7 @@
   "package": "dev.kirantipov.smartrecipes.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "ServerWorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1

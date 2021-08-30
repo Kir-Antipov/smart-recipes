@@ -1,6 +1,7 @@
 package dev.kirantipov.smartrecipes.api;
 
 import com.mojang.serialization.Lifecycle;
+import dev.kirantipov.smartrecipes.api.event.WorldStateEvents;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -22,6 +23,9 @@ final class RecipeReloadConditions {
     public static final RecipeReloadCondition PLAYER_JOINED = create(ServerPlayConnectionEvents.JOIN, (e, c) -> e.register((__, ___, s) -> c.invoker().onRecipeReloadEvent(s, c.getId())));
 
     public static final RecipeReloadCondition PLAYER_DISCONNECTED = create(ServerPlayConnectionEvents.DISCONNECT, (e, c) -> e.register((__, s) -> c.invoker().onRecipeReloadEvent(s, c.getId())));
+
+    public static final RecipeReloadCondition WEATHER_CHANGED = create(WorldStateEvents.WEATHER_CHANGED, (e, c) -> e.register(w -> c.invoker().onRecipeReloadEvent(w.getServer(), c.getId())));
+
 
     private static <T> RecipeReloadCondition create(Event<T> parentEvent, BiConsumer<Event<T>, RecipeReloadCondition> consumer) {
         RecipeReloadCondition reloadCondition = create();
