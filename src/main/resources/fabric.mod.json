@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "smart_recipes",
+  "id": "smart-recipes",
   "version": "${version}",
   "name": "Smart Recipes",
   "description": "A Fabric mod which extends recipe format with conditions.",
@@ -13,13 +13,13 @@
     "issues": "https://github.com/Kir-Antipov/smart-recipes/issues/new/choose"
   },
   "license": "MIT",
-  "icon": "assets/smart_recipes/icon.png",
+  "icon": "assets/smart-recipes/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": ["dev.kirantipov.smartrecipes.SmartRecipes"]
   },
   "mixins": [
-    "smart_recipes.mixins.json"
+    "smart-recipes.mixins.json"
   ],
   "depends": {
     "fabric": "*",
