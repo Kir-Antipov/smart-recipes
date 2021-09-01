@@ -21,6 +21,7 @@
   "mixins": [
     "smart-recipes.mixins.json"
   ],
+  "accessWidener": "smart-recipes.accesswidener",
   "depends": {
     "fabric": "*",
     "fabricloader": "${fabric}",

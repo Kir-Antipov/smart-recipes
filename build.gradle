@@ -14,6 +14,10 @@ group = project.maven_group
 version = "${project.mod_version}${getVersionMetadata()}" as Object
 archivesBaseName = "${project.archives_base_name}-mc${minecraftDependencyVersion}"
 
+loom {
+    accessWidenerPath = file("src/main/resources/smart-recipes.accesswidener")
+}
+
 // To change the versions see the gradle.properties file
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
