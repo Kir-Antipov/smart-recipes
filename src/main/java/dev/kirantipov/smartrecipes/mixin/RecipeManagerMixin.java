@@ -1,6 +1,5 @@
 package dev.kirantipov.smartrecipes.mixin;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dev.kirantipov.smartrecipes.SmartRecipes;
@@ -128,13 +127,12 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
     }
 
     @Override
-    @SuppressWarnings("UnstableApiUsage")
     public void apply(Collection<Pair<RecipeState, RecipeInfo>> diff) {
         if (diff.isEmpty()) {
             return;
         }
 
-        Map<RecipeType<?>, Map<Identifier, Recipe<?>>> mutableRecipes = this.recipes.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, x -> new HashMap<>(x.getValue())));
+        Map<RecipeType<?>, Map<Identifier, Recipe<?>>> mutableRecipes = makeMutable(this.recipes);
         for (Pair<RecipeState, RecipeInfo> entry : diff) {
             RecipeState recipeState = entry.getLeft();
             RecipeInfo recipeInfo = entry.getRight();
@@ -157,8 +155,7 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
                 logParsingError(recipeId, e);
             }
         }
-
-        this.recipes = mutableRecipes.entrySet().stream().collect(ImmutableMap.toImmutableMap(Map.Entry::getKey, x -> ImmutableMap.copyOf(x.getValue())));
+        this.recipes = mutableRecipes;
     }
 
     @Unique
@@ -171,7 +168,17 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
         PlayerLookup.all(server).forEach(x -> RecipeBookUtil.apply(x.getRecipeBook(), diff));
     }
 
+    @Unique
     private static void logParsingError(Identifier recipeId, Throwable error) {
         SmartRecipes.LOGGER.error("Parsing error loading recipe {}", recipeId, error);
+    }
+
+    @Unique
+    private static Map<RecipeType<?>, Map<Identifier, Recipe<?>>> makeMutable(Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes) {
+        if (recipes instanceof HashMap<?, ?>) {
+            return recipes;
+        }
+
+        return recipes.entrySet().stream().map(x -> new AbstractMap.SimpleEntry<>(x.getKey(), new HashMap<>(x.getValue()))).collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue));
     }
 }
