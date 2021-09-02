@@ -7,6 +7,7 @@ import dev.kirantipov.smartrecipes.SmartRecipes;
 import dev.kirantipov.smartrecipes.api.*;
 import dev.kirantipov.smartrecipes.api.networking.SynchronizeReloadedRecipesPacket;
 import dev.kirantipov.smartrecipes.util.JsonUtil;
+import dev.kirantipov.smartrecipes.util.recipe.RecipeBookUtil;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
@@ -121,7 +122,7 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
 
         if (reloaded != 0) {
             this.apply(diff);
-            new SynchronizeReloadedRecipesPacket(diff).send(PlayerLookup.all(server).stream());
+            this.sync(server, diff);
             SmartRecipes.LOGGER.info("Reloaded {} recipes (removed: {} | added: {}) on the '{}' event", reloaded, removed, added, cause);
         }
     }
@@ -129,7 +130,7 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
     @Override
     @SuppressWarnings("UnstableApiUsage")
     public void apply(Collection<Pair<RecipeState, RecipeInfo>> diff) {
-        if (diff.size() == 0) {
+        if (diff.isEmpty()) {
             return;
         }
 
@@ -158,6 +159,16 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
         }
 
         this.recipes = mutableRecipes.entrySet().stream().collect(ImmutableMap.toImmutableMap(Map.Entry::getKey, x -> ImmutableMap.copyOf(x.getValue())));
+    }
+
+    @Unique
+    private void sync(MinecraftServer server, Collection<Pair<RecipeState, RecipeInfo>> diff) {
+        if (diff.isEmpty()) {
+            return;
+        }
+
+        new SynchronizeReloadedRecipesPacket(diff).send(PlayerLookup.all(server).stream());
+        PlayerLookup.all(server).forEach(x -> RecipeBookUtil.apply(x.getRecipeBook(), diff));
     }
 
     private static void logParsingError(Identifier recipeId, Throwable error) {

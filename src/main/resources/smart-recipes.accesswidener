@@ -1,1 +1,3 @@
 accessWidener v1 named
+
+accessible method net/minecraft/recipe/book/RecipeBook remove (Lnet/minecraft/util/Identifier;)V

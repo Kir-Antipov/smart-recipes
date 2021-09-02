@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import dev.kirantipov.smartrecipes.SmartRecipes;
 import dev.kirantipov.smartrecipes.api.RecipeInfo;
 import dev.kirantipov.smartrecipes.api.ReloadableRecipeManager;
+import dev.kirantipov.smartrecipes.util.recipe.RecipeBookUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -15,6 +16,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.book.RecipeBook;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
@@ -43,10 +45,12 @@ public class SynchronizeReloadedRecipesPacket {
 
     @Environment(EnvType.CLIENT)
     public void apply(MinecraftClient client, ClientPlayNetworkHandler handler) {
-        client.execute(() -> {
-            RecipeManager recipeManager = handler.getRecipeManager();
-            ((ReloadableRecipeManager)recipeManager).apply(this.reloadedRecipes);
-        });
+        RecipeManager recipeManager = handler.getRecipeManager();
+        ((ReloadableRecipeManager)recipeManager).apply(this.reloadedRecipes);
+        RecipeBook recipeBook = client.player == null ? null : client.player.getRecipeBook();
+        if (recipeBook != null) {
+            RecipeBookUtil.apply(recipeBook, this.reloadedRecipes);
+        }
     }
 
     public void send(Stream<ServerPlayerEntity> players) {
