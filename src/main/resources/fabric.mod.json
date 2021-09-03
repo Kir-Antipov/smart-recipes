@@ -3,7 +3,7 @@
   "id": "smart-recipes",
   "version": "${version}",
   "name": "Smart Recipes",
-  "description": "A Fabric mod which extends recipe format with conditions.",
+  "description": "A Fabric mod that extends recipe format with conditions.",
   "authors": [
     "Kir_Antipov"
   ],
