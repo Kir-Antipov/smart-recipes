@@ -21,13 +21,13 @@ Have you ever found the standard Minecraft recipe format boring? Or have you eve
 
 This mod adds brand new `conditions` property to the recipe format. It's similar*(-ish)* to loot tables' conditions. Let's take a look at it:
 
-```json
+```jsonc
 "conditions": []
 ```
 
 This property determines conditions for the recipe to be loaded. If multiple conditions are specified, all must pass.
 
-```json
+```jsonc
 "conditions": [
   {
     "condition": "conditionName0",
@@ -49,7 +49,7 @@ This property determines conditions for the recipe to be loaded. If multiple con
 
 Exactly the same as loot tables' conditions. But do you know what the problem is? I completely dislike them, because they're too verbose. How can we make things better?
 
-```json
+```jsonc
 // Let's turn this condition declaration:
 {
   "condition": "conditionName1",
@@ -64,7 +64,7 @@ Exactly the same as loot tables' conditions. But do you know what the problem is
 
 Much better, don't you think?
 
-```json
+```jsonc
 "conditions": [
   {
     "conditionName0": [4, "2"]
@@ -77,7 +77,7 @@ Much better, don't you think?
 
 Better, but still can be better! Let's combine our conditions into a single object:
 
-```json
+```jsonc
 "conditions": [
   {
     "conditionName0": [4, "2"],
@@ -88,7 +88,7 @@ Better, but still can be better! Let's combine our conditions into a single obje
 
 And here goes one last thing. If an array contains only one object, the `Smart Recipes` mod allows you to omit its declaration! So here's the final result:
 
-```json
+```jsonc
 "conditions": {
   "conditionName0": [4, "2"],
   "conditionName1": "foo"
@@ -103,7 +103,7 @@ Reload conditions allow recipe conditions to be re-evaluated on some occasions. 
 
 There's nothing complex here at all. Everything you need to do is provide names of the available reload conditions that your recipe depends on:
 
-```json
+```jsonc
 "reload_conditions": [
   "weather_changed",
   "time_changed"
@@ -118,7 +118,7 @@ There's nothing complex here at all. Everything you need to do is provide names 
 
 Doesn't require arguments, always returns false.
 
-```json
+```jsonc
 "conditions": [
   "false"
 ]
@@ -128,7 +128,7 @@ Doesn't require arguments, always returns false.
 
 Doesn't require arguments, always returns (you guessed it) true.
 
-```json
+```jsonc
 "conditions": [
   "true"
 ]
@@ -138,7 +138,7 @@ Doesn't require arguments, always returns (you guessed it) true.
 
 Return true if any of the specified conditions returns true.
 
-```json
+```jsonc
 "conditions": {
   "or": [
     { "false": {} },
@@ -152,7 +152,7 @@ Return true if any of the specified conditions returns true.
 
 Return true if all of the specified conditions return true.
 
-```json
+```jsonc
 "conditions": {
   "and": {
     "true": {},
@@ -165,7 +165,7 @@ Return true if all of the specified conditions return true.
 
 Return true if none of the specified conditions return true.
 
-```json
+```jsonc
 "conditions": {
   "not": {
     "false": null
@@ -177,7 +177,7 @@ Return true if none of the specified conditions return true.
 
 Doesn't require arguments, returns true if the server is in the hardcore mode.
 
-```json
+```jsonc
 "conditions": {
   "not": "is_hardcore"
 }
@@ -187,7 +187,7 @@ Doesn't require arguments, returns true if the server is in the hardcore mode.
 
 Doesn't require arguments, returns true if the current difficulty is peaceful.
 
-```json
+```jsonc
 "conditions": {
   "or": [
     "is_peaceful_difficulty",
@@ -200,7 +200,7 @@ Doesn't require arguments, returns true if the current difficulty is peaceful.
 
 Doesn't require arguments, returns true if the current difficulty is easy.
 
-```json
+```jsonc
 "conditions": {
   "not": ["is_easy_difficulty"]
 }
@@ -210,7 +210,7 @@ Doesn't require arguments, returns true if the current difficulty is easy.
 
 Doesn't require arguments, returns true if the current difficulty is normal.
 
-```json
+```jsonc
 "conditions": "is_normal_difficulty"
 ```
 
@@ -218,7 +218,7 @@ Doesn't require arguments, returns true if the current difficulty is normal.
 
 Doesn't require arguments, returns true if the current difficulty is hard.
 
-```json
+```jsonc
 "conditions": {
   "is_hard_difficulty": null
 }
@@ -228,7 +228,7 @@ Doesn't require arguments, returns true if the current difficulty is hard.
 
 Returns true if one of the specified values matches the current difficulty.
 
-```json
+```jsonc
 "conditions": {
   "difficulty_check": [
     0, // Ordinal number of the Peaceful difficulty
@@ -247,7 +247,7 @@ Returns true if one of the specified values matches the current difficulty.
 
 Doesn't require arguments, returns true if the default gamemode is survival.
 
-```json
+```jsonc
 "conditions": "is_survival"
 ```
 
@@ -255,7 +255,7 @@ Doesn't require arguments, returns true if the default gamemode is survival.
 
 Doesn't require arguments, returns true if the default gamemode is creative.
 
-```json
+```jsonc
 "conditions": ["is_creative"]
 ```
 
@@ -263,7 +263,7 @@ Doesn't require arguments, returns true if the default gamemode is creative.
 
 Doesn't require arguments, returns true if the default gamemode is adventure.
 
-```json
+```jsonc
 "conditions": {
   "is_adventure": {}
 }
@@ -273,7 +273,7 @@ Doesn't require arguments, returns true if the default gamemode is adventure.
 
 Doesn't require arguments, returns true if the default gamemode is spectator.
 
-```json
+```jsonc
 "conditions": {
   "not": "is_spectator"
 }
@@ -283,7 +283,7 @@ Doesn't require arguments, returns true if the default gamemode is spectator.
 
 Returns true if one of the specified values matches the default gamemode.
 
-```json
+```jsonc
 "conditions": {
   "gamemode_check": [
     0, // Ordinal number of the Survival gamemode
@@ -302,7 +302,7 @@ Returns true if one of the specified values matches the default gamemode.
 
 Returns true if one of the specified strings matches the current [weather in the Overworld dimension](https://minecraft.fandom.com/wiki/Weather).
 
-```json
+```jsonc
 "conditions": {
   "weather_check": [
     "clear",    // Weather is clear
@@ -316,7 +316,7 @@ Returns true if one of the specified strings matches the current [weather in the
 
 Returns true if one of the specified strings matches the current [time in the Overworld dimension](https://minecraft.fandom.com/wiki/Daylight_cycle).
 
-```json
+```jsonc
 "conditions": {
   "time_check": [
     "day",      // from 1000  to 12999 ticks
@@ -333,7 +333,7 @@ Returns true if one of the specified strings matches the current [time in the Ov
 
 Returns true if all of the specified players are online.
 
-```json
+```jsonc
 "conditions": {
   "players_online": [
     "Notch",
@@ -347,7 +347,7 @@ Returns true if all of the specified players are online.
 
 Returns true if all of the specified blocks are registered.
 
-```json
+```jsonc
 "conditions": {
   "blocks_registered": [
     "stone",
@@ -361,7 +361,7 @@ Returns true if all of the specified blocks are registered.
 
 Returns true if all of the specified items are registered.
 
-```json
+```jsonc
 "conditions": {
   "items_registered": [
     "stone",
@@ -375,7 +375,7 @@ Returns true if all of the specified items are registered.
 
 Returns true if all of the specified block entities are registered.
 
-```json
+```jsonc
 "conditions": {
   "block_entities_registered": [
     "furnance",
@@ -389,7 +389,7 @@ Returns true if all of the specified block entities are registered.
 
 Returns true if all of the specified registry entries are registered.
 
-```json
+```jsonc
 "conditions": {
   "entries_registered": [
     {
@@ -412,7 +412,7 @@ Returns true if all of the specified registry entries are registered.
 
 Returns true if all of the specified mods are loaded.
 
-```json
+```jsonc
 "conditions": {
   "fabric:mods_loaded": [
     {
@@ -433,7 +433,7 @@ Returns true if all of the specified mods are loaded.
 
 Reload recipes when player joins to/disconnects from the server.
 
-```json
+```jsonc
 "conditions": {
   "not": {
     "players_online": "Nickname"
@@ -449,7 +449,7 @@ Reload recipes when player joins to/disconnects from the server.
 
 Reloads recipes when difficulty changes.
 
-```json
+```jsonc
 "conditions": "is_easy_difficulty",
 "reload_conditions": "difficulty_changed"
 ```
@@ -458,7 +458,7 @@ Reloads recipes when difficulty changes.
 
 Reloads recipes when the default gamemode changes.
 
-```json
+```jsonc
 "conditions": {
   "gamemode_check": [
     "survival",
@@ -472,7 +472,7 @@ Reloads recipes when the default gamemode changes.
 
 Reloads recipes when weather changes.
 
-```json
+```jsonc
 "conditions": {
   "weather_check": "thunder"
 },
@@ -483,7 +483,7 @@ Reloads recipes when weather changes.
 
 Reloads recipes when time changes.
 
-```json
+```jsonc
 "conditions": {
   "time_check": [
     "noon",
@@ -501,7 +501,7 @@ Reloads recipes when time changes.
 
 Let's imagine that we want to add a simplified TNT recipe:
 
-```json
+```jsonc
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
@@ -532,7 +532,7 @@ Now it's time to add some sweet conditions. Here're our goals:
 
 And from words to deeds:
 
-```json
+```jsonc
 {
   // The same part as above, nothing interesting to see here
   "type": "minecraft:crafting_shaped",
