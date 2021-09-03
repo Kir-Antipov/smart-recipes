@@ -153,6 +153,7 @@ project.fragment.lock.json
 project.lock.json
 PublishScripts/
 rcf/
+src/main/resources/data
 TestResult.xml
 UpgradeLog*.htm
 UpgradeLog*.XML
