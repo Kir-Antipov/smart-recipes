@@ -7,7 +7,7 @@
 [![CurseForge](https://img.shields.io/badge/dynamic/json?color=%23f16436&label=CurseForge&query=title&url=https%3A%2F%2Fapi.cfwidget.com%2F522139&cacheSeconds=3600)](https://www.curseforge.com/minecraft/mc-mods/smart-recipes)
 [![GitHub license](https://img.shields.io/github/license/Kir-Antipov/smart-recipes.svg?cacheSeconds=36000)](https://github.com/Kir-Antipov/smart-recipes#readme)
 
-Have you ever found the standard Minecraft recipe format boring? Or have you ever wanted to make the game a little more event-based, like Terraria? Than `Smart Recipes` is what you need! Cook your own unique experience with the new conditional recipe format!
+Have you ever found the standard Minecraft recipe format boring? Or have you ever wanted to make the game a little more event-based, like Terraria? Then `Smart Recipes` is what you need! Cook your own unique experience with the new conditional recipe format!
 
 ----
 
@@ -150,7 +150,7 @@ Return true if any of the specified conditions returns true.
 
 ### `and` and `all`
 
-Return true if all of the specified conditions return true.
+Return true if all the specified conditions return true.
 
 ```jsonc
 "conditions": {
@@ -331,7 +331,7 @@ Returns true if one of the specified strings matches the current [time in the Ov
 
 ### `players_online`
 
-Returns true if all of the specified players are online.
+Returns true if all the specified players are online.
 
 ```jsonc
 "conditions": {
@@ -345,7 +345,7 @@ Returns true if all of the specified players are online.
 
 ### `blocks_registered`
 
-Returns true if all of the specified blocks are registered.
+Returns true if all the specified blocks are registered.
 
 ```jsonc
 "conditions": {
@@ -359,7 +359,7 @@ Returns true if all of the specified blocks are registered.
 
 ### `items_registered`
 
-Returns true if all of the specified items are registered.
+Returns true if all the specified items are registered.
 
 ```jsonc
 "conditions": {
@@ -373,7 +373,7 @@ Returns true if all of the specified items are registered.
 
 ### `block_entities_registered`
 
-Returns true if all of the specified block entities are registered.
+Returns true if all the specified block entities are registered.
 
 ```jsonc
 "conditions": {
@@ -387,7 +387,7 @@ Returns true if all of the specified block entities are registered.
 
 ### `entries_registered`
 
-Returns true if all of the specified registry entries are registered.
+Returns true if all the specified registry entries are registered.
 
 ```jsonc
 "conditions": {
@@ -410,7 +410,7 @@ Returns true if all of the specified registry entries are registered.
 
 ### `fabric:mods_loaded`
 
-Returns true if all of the specified mods are loaded.
+Returns true if all the specified mods are loaded.
 
 ```jsonc
 "conditions": {
@@ -523,7 +523,7 @@ Let's imagine that we want to add a simplified TNT recipe:
 }
 ```
 
-Now it's time to add some sweet conditions. Here're our goals:
+Now it's time to add some sweet conditions. Here are our goals:
 
  1) This recipe should be available only at `midnight` and `sunrise`, 'cause nobody crafts explosives in the light of day
  2) The recipe should be available only when `weather's clear`, 'cause we don't want our gunpowder to get damp
