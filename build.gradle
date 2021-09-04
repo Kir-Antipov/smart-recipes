@@ -7,12 +7,9 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
 
-String loaderDependencyVersion = ">=${project.loader_version.split(/\+/)[0]}"
-String minecraftDependencyVersion = project.minecraft_version.split(/[+ -]/)[0].replaceFirst(/^(\d+\.\d+)(\.\d+|)$/, '$1.x')
-
 group = project.maven_group
+archivesBaseName = project.archives_base_name
 version = "${project.mod_version}${getVersionMetadata()}" as Object
-archivesBaseName = "${project.archives_base_name}-mc${minecraftDependencyVersion}"
 
 loom {
     accessWidenerPath = file("src/main/resources/smart-recipes.accesswidener")
@@ -30,8 +27,8 @@ dependencies {
 processResources {
     def fabricModProperties = [
         "version": version,
-        "fabric": loaderDependencyVersion,
-        "minecraft": minecraftDependencyVersion
+        "fabric": ">=${project.loader_version.split(/\+/)[0]}",
+        "minecraft": project.minecraft_version.split(/[+ -]/)[0].replaceFirst(/^(\d+\.\d+)(\.\d+|)$/, '$1.x')
     ]
 
     filesMatching("fabric.mod.json") {
@@ -79,8 +76,8 @@ publishing {
             name "GitHub"
             url "https://maven.pkg.github.com/Kir-Antipov/smart-recipes"
             credentials {
-                username = System.getenv("USERNAME")
-                password = System.getenv("TOKEN")
+                username = project.findProperty("GITHUB_ACTOR") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN")
             }
         }
     }
@@ -88,19 +85,19 @@ publishing {
 
 @SuppressWarnings("GrMethodMayBeStatic") // It cannot
 String getVersionMetadata() {
+    String metadata = "+${project.minecraft_version}"
+
     // Release builds don't require additional metadata
     String release_tag = System.getenv("RELEASE_TAG")
     if (release_tag != null && release_tag.length() != 0) {
-        return ""
+        return metadata
     }
 
-    // GitHub CI builds only
     String build_id = System.getenv("GITHUB_RUN_NUMBER")
     if (build_id != null && build_id.length() != 0) {
-        return "+build.${build_id}"
-    }
-
-    if (grgit != null) {
+        // GitHub CI builds only
+        metadata += "+build.${build_id}"
+    } else if (grgit != null) {
         def head = grgit.head()
         def id = head.abbreviatedId
 
@@ -109,9 +106,11 @@ String getVersionMetadata() {
             id += "-dirty"
         }
 
-        return "+rev.${id}"
+        metadata += "+rev.${id}"
+    } else {
+        // No tracking information could be found about the build
+        metadata += "+unknown"
     }
 
-    // No tracking information could be found about the build
-    return "+unknown"
+    return metadata
 }
