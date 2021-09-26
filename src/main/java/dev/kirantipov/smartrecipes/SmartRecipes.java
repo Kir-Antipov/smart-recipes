@@ -1,6 +1,7 @@
 package dev.kirantipov.smartrecipes;
 
 import dev.kirantipov.smartrecipes.api.networking.SmartRecipesPackets;
+import dev.kirantipov.smartrecipes.config.SmartRecipesConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -11,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 public class SmartRecipes implements ClientModInitializer {
     public static final String MOD_ID = "smart-recipes";
     public static final Logger LOGGER = LogManager.getLogger();
+    public static final SmartRecipesConfig CONFIG = SmartRecipesConfig.load();
 
     public static Identifier locate(String id) {
         return new Identifier(MOD_ID, id);

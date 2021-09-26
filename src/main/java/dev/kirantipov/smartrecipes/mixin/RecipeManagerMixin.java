@@ -170,7 +170,9 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
 
     @Unique
     private static void logParsingError(Identifier recipeId, Throwable error) {
-        SmartRecipes.LOGGER.error("Parsing error loading recipe {}", recipeId, error);
+        if (SmartRecipes.CONFIG.getValue("debug").orElse(true)) {
+            SmartRecipes.LOGGER.error("Parsing error loading recipe {}", recipeId, error);
+        }
     }
 
     @Unique
