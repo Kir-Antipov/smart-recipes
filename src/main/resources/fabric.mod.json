@@ -22,6 +22,12 @@
     "smart-recipes.mixins.json"
   ],
   "accessWidener": "smart-recipes.accesswidener",
+  "custom": {
+    "modmanager": {
+      "modrinth": "9a4QRg8h",
+      "curseforge": 522139
+    }
+  },
   "depends": {
     "fabric": "*",
     "fabricloader": "${fabric}",
