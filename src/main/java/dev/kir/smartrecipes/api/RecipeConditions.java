@@ -6,7 +6,7 @@ import dev.kir.smartrecipes.util.JsonUtil;
 import dev.kir.smartrecipes.util.world.TimeOfDay;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import net.fabricmc.loader.util.version.VersionPredicateParser;
+import net.fabricmc.loader.api.metadata.version.VersionPredicate;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
@@ -168,7 +168,7 @@ final class RecipeConditions {
         }
 
         try {
-            return VersionPredicateParser.matches(mod.getMetadata().getVersion(), x.version());
+            return VersionPredicate.parse(x.version()).test(mod.getMetadata().getVersion());
         } catch (Throwable ex) {
             throw new RuntimeException(ex);
         }
