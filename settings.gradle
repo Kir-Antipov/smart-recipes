@@ -12,4 +12,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "smartrecipes"
+rootProject.name = "smart-recipes"
