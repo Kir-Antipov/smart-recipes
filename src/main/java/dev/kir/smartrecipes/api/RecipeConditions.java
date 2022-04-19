@@ -18,12 +18,13 @@ import net.minecraft.world.WorldProperties;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 final class RecipeConditions {
     public static final RegistryKey<Registry<RecipeCondition>> KEY = RegistryKey.ofRegistry(new Identifier("recipe_condition"));
-    public static final Registry<RecipeCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental());
+    public static final Registry<RecipeCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental(), (Function)null);
 
 
     public static final RecipeCondition FALSE = (e, i) -> false;
