@@ -16,7 +16,7 @@ import java.util.function.BiConsumer;
 
 final class RecipeReloadConditions {
     public static final RegistryKey<Registry<RecipeReloadCondition>> KEY = RegistryKey.ofRegistry(new Identifier("recipe_reload_condition"));
-    public static final Registry<RecipeReloadCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental());
+    public static final Registry<RecipeReloadCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental(), null);
 
 
     public static final RecipeReloadCondition END_DATA_PACK_RELOAD = create(ServerLifecycleEvents.END_DATA_PACK_RELOAD, ServerLifecycleEvents.SERVER_STARTED, (e, c) -> e.register((s, __, ___) -> c.invoker().onRecipeReloadEvent(s, c.getId())), (e, c) -> e.register(s -> c.invoker().onRecipeReloadEvent(s, c.getId())));

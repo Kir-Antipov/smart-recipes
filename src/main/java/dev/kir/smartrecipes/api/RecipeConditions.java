@@ -23,7 +23,7 @@ import java.util.stream.StreamSupport;
 
 final class RecipeConditions {
     public static final RegistryKey<Registry<RecipeCondition>> KEY = RegistryKey.ofRegistry(new Identifier("recipe_condition"));
-    public static final Registry<RecipeCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental());
+    public static final Registry<RecipeCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental(), null);
 
 
     public static final RecipeCondition FALSE = (e, i) -> false;
