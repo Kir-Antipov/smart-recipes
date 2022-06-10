@@ -1,19 +1,16 @@
 package dev.kir.smartrecipes.mixin;
 
-import com.mojang.authlib.GameProfileRepository;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.datafixers.DataFixer;
 import dev.kir.smartrecipes.api.event.ServerStateEvents;
 import net.minecraft.resource.ResourcePackManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.SaveLoader;
 import net.minecraft.server.WorldGenerationProgressListenerFactory;
-import net.minecraft.util.UserCache;
+import net.minecraft.util.ApiServices;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.SaveProperties;
 import net.minecraft.world.level.storage.LevelStorage;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,7 +35,7 @@ abstract class MinecraftServerMixin {
     private GameMode gameMode;
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    private void init(Thread serverThread, LevelStorage.Session session, ResourcePackManager dataPackManager, SaveLoader saveLoader, Proxy proxy, DataFixer dataFixer, @Nullable MinecraftSessionService sessionService, @Nullable GameProfileRepository gameProfileRepo, @Nullable UserCache userCache, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) {
+    private void init(Thread serverThread, LevelStorage.Session session, ResourcePackManager dataPackManager, SaveLoader saveLoader, Proxy proxy, DataFixer dataFixer, ApiServices apiServices, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) {
         this.difficulty = saveProperties.getDifficulty();
         this.gameMode = saveProperties.getGameMode();
     }

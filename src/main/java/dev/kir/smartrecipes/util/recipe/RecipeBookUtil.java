@@ -1,7 +1,7 @@
 package dev.kir.smartrecipes.util.recipe;
 
-import dev.kir.smartrecipes.api.ReloadableRecipeManager;
 import dev.kir.smartrecipes.api.RecipeInfo;
+import dev.kir.smartrecipes.api.ReloadableRecipeManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
@@ -11,7 +11,6 @@ import net.minecraft.client.gui.screen.recipebook.RecipeResultCollection;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.search.SearchManager;
-import net.minecraft.client.search.SearchableContainer;
 import net.minecraft.client.toast.RecipeToast;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.book.RecipeBook;
@@ -63,14 +62,11 @@ public final class RecipeBookUtil {
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayNetworkHandler network = MinecraftClient.getInstance().getNetworkHandler();
         if (network != null) {
-            SearchableContainer<RecipeResultCollection> recipeOutput = client.getSearchableContainer(SearchManager.RECIPE_OUTPUT);
-            recipeOutput.clear();
             clientRecipeBook.reload(network.getRecipeManager().values());
             for (RecipeResultCollection collection : clientRecipeBook.getOrderedResults()) {
-                recipeOutput.add(collection);
                 collection.initialize(clientRecipeBook);
             }
-            recipeOutput.reload();
+            client.reloadSearchProvider(SearchManager.RECIPE_OUTPUT, clientRecipeBook.getOrderedResults());
         }
 
         if (MinecraftClient.getInstance().currentScreen instanceof RecipeBookProvider recipeBookProvider) {
