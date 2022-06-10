@@ -31,10 +31,14 @@ import java.util.stream.Stream;
 @Mixin(RecipeManager.class)
 class RecipeManagerMixin implements ReloadableRecipeManager {
     @Unique
-    private static final Identifier CONDITIONS = new Identifier("conditions");
+    private static final Identifier CONDITIONS = SmartRecipes.locate("conditions");
+    @Unique
+    private static final Identifier OBSOLETE_CONDITIONS = new Identifier("conditions");
 
     @Unique
-    private static final Identifier RELOAD_CONDITIONS = new Identifier("reload_conditions");
+    private static final Identifier RELOAD_CONDITIONS = SmartRecipes.locate("reload_conditions");
+    @Unique
+    private static final Identifier OBSOLETE_RELOAD_CONDITIONS = new Identifier("reload_conditions");
 
     @Shadow
     private Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes;
@@ -42,7 +46,7 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
     @Unique
     private Map<Identifier, Collection<Map.Entry<Identifier, JsonElement>>> waitingForReload;
 
-    @Inject(method = "apply", at = @At("HEAD"))
+    @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V", at = @At("HEAD"))
     private void apply(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
         this.waitingForReload = new ConcurrentHashMap<>();
 
@@ -59,6 +63,11 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
             Identifier recipeId = entry.getKey();
             JsonObject recipeObject = entry.getValue().getAsJsonObject();
             JsonElement conditions = JsonUtil.get(recipeObject, CONDITIONS);
+            boolean isObsoleteEntry = false;
+            if (conditions == null) {
+                conditions = JsonUtil.get(recipeObject, OBSOLETE_CONDITIONS);
+                isObsoleteEntry = true;
+            }
             if (conditions == null) {
                 continue;
             }
@@ -72,12 +81,25 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
             } catch (RecipeContextRequiredException e) {
                 reloadConditions = Stream.of(defaultContextualConditionId);
             } catch (Throwable e) {
-                logParsingError(recipeId, e);
+                if (!isObsoleteEntry) {
+                    logParsingError(recipeId, e);
+                }
+                isObsoleteEntry = false;
             }
 
-            reloadConditions = Stream.concat(reloadConditions, JsonUtil.flatMap(JsonUtil.get(recipeObject, RELOAD_CONDITIONS)).map(x -> Identifier.tryParse(x.getAsString())).filter(Objects::nonNull));
+            JsonElement definedReloadConditions = JsonUtil.get(recipeObject, RELOAD_CONDITIONS);
+            if (definedReloadConditions == null) {
+                definedReloadConditions = JsonUtil.get(recipeObject, OBSOLETE_RELOAD_CONDITIONS);
+                isObsoleteEntry |= definedReloadConditions != null;
+            }
+
+            reloadConditions = Stream.concat(reloadConditions, JsonUtil.flatMap(definedReloadConditions).map(x -> Identifier.tryParse(x.getAsString())).filter(Objects::nonNull));
             for (Identifier reloadConditionId : (Iterable<Identifier>)reloadConditions::iterator) {
                 this.waitingForReload.computeIfAbsent(reloadConditionId, i -> ConcurrentHashMap.newKeySet()).add(entry);
+            }
+
+            if (isObsoleteEntry && SmartRecipes.CONFIG.getValue("debug").orElse(true)) {
+                SmartRecipes.LOGGER.warn("{} uses obsolete '{}' and/or '{}' entries. Consider using '{}' and '{}' instead.", recipeId, OBSOLETE_CONDITIONS, OBSOLETE_RELOAD_CONDITIONS, CONDITIONS, RELOAD_CONDITIONS);
             }
         }
 
@@ -102,6 +124,9 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
                 JsonObject recipeObject = entry.getValue().getAsJsonObject();
                 RecipeInfo recipeInfo = recipeContext.with(recipeId, recipeObject);
                 JsonElement conditions = JsonUtil.get(recipeObject, CONDITIONS);
+                if (conditions == null) {
+                    conditions = JsonUtil.get(recipeObject, OBSOLETE_CONDITIONS);
+                }
 
                 boolean shouldExist = RecipeCondition.ALL.test(conditions, recipeInfo);
                 boolean exists = this.recipes.get(recipeInfo.getRecipeType().orElseThrow()).containsKey(recipeId);

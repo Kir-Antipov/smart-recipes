@@ -1,13 +1,13 @@
 package dev.kir.smartrecipes.api;
 
 import com.mojang.serialization.Lifecycle;
+import dev.kir.smartrecipes.SmartRecipes;
 import dev.kir.smartrecipes.api.event.ServerStateEvents;
 import dev.kir.smartrecipes.api.event.WorldStateEvents;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.util.registry.SimpleRegistry;
@@ -15,7 +15,7 @@ import net.minecraft.util.registry.SimpleRegistry;
 import java.util.function.BiConsumer;
 
 final class RecipeReloadConditions {
-    public static final RegistryKey<Registry<RecipeReloadCondition>> KEY = RegistryKey.ofRegistry(new Identifier("recipe_reload_condition"));
+    public static final RegistryKey<Registry<RecipeReloadCondition>> KEY = RegistryKey.ofRegistry(SmartRecipes.locate("recipe_reload_condition"));
     public static final Registry<RecipeReloadCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental(), null);
 
 

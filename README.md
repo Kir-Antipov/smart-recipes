@@ -19,16 +19,16 @@ Have you ever found the standard Minecraft recipe format boring? Or have you eve
 
 `Smart Recipes` mod extends [vanilla recipe format](https://minecraft.fandom.com/wiki/Recipe), so make sure that you understand how it works; otherwise, everything I describe here won't make any sense.
 
-This mod adds brand new `conditions` property to the recipe format. It's similar*(-ish)* to loot tables' conditions. Let's take a look at it:
+This mod adds brand new `smart_recipes:conditions` property to the recipe format. It's similar*(-ish)* to loot tables' conditions. Let's take a look at it:
 
 ```jsonc
-"conditions": []
+"smart_recipes:conditions": []
 ```
 
 This property determines conditions for the recipe to be loaded. If multiple conditions are specified, all must pass.
 
 ```jsonc
-"conditions": [
+"smart_recipes:conditions": [
   {
     "condition": "conditionName0",
     "args": [
@@ -65,7 +65,7 @@ Exactly the same as loot tables' conditions. But do you know what the problem is
 Much better, don't you think?
 
 ```jsonc
-"conditions": [
+"smart_recipes:conditions": [
   {
     "conditionName0": [4, "2"]
   },
@@ -78,7 +78,7 @@ Much better, don't you think?
 Better, but still can be better! Let's combine our conditions into a single object:
 
 ```jsonc
-"conditions": [
+"smart_recipes:conditions": [
   {
     "conditionName0": [4, "2"],
     "conditionName1": ["foo"]
@@ -89,7 +89,7 @@ Better, but still can be better! Let's combine our conditions into a single obje
 And here goes one last thing. If an array contains only one object, the `Smart Recipes` mod allows you to omit its declaration! So here's the final result:
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "conditionName0": [4, "2"],
   "conditionName1": "foo"
 }
@@ -104,7 +104,7 @@ Reload conditions allow recipe conditions to be re-evaluated on some occasions. 
 There's nothing complex here at all. Everything you need to do is provide names of the available reload conditions that your recipe depends on:
 
 ```jsonc
-"reload_conditions": [
+"smart_recipes:reload_conditions": [
   "weather_changed",
   "time_changed"
 ]
@@ -119,7 +119,7 @@ There's nothing complex here at all. Everything you need to do is provide names 
 Doesn't require arguments, always returns false.
 
 ```jsonc
-"conditions": [
+"smart_recipes:conditions": [
   "false"
 ]
 ```
@@ -129,7 +129,7 @@ Doesn't require arguments, always returns false.
 Doesn't require arguments, always returns (you guessed it) true.
 
 ```jsonc
-"conditions": [
+"smart_recipes:conditions": [
   "true"
 ]
 ```
@@ -139,7 +139,7 @@ Doesn't require arguments, always returns (you guessed it) true.
 Return true if any of the specified conditions returns true.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "or": [
     { "false": {} },
     false,
@@ -153,7 +153,7 @@ Return true if any of the specified conditions returns true.
 Return true if all the specified conditions return true.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "and": {
     "true": {},
     "false": null
@@ -166,7 +166,7 @@ Return true if all the specified conditions return true.
 Return true if none of the specified conditions return true.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "not": {
     "false": null
   }
@@ -178,7 +178,7 @@ Return true if none of the specified conditions return true.
 Doesn't require arguments, returns true if the server is in the hardcore mode.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "not": "is_hardcore"
 }
 ```
@@ -188,7 +188,7 @@ Doesn't require arguments, returns true if the server is in the hardcore mode.
 Doesn't require arguments, returns true if the current difficulty is peaceful.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "or": [
     "is_peaceful_difficulty",
     "is_hardcore"
@@ -201,7 +201,7 @@ Doesn't require arguments, returns true if the current difficulty is peaceful.
 Doesn't require arguments, returns true if the current difficulty is easy.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "not": ["is_easy_difficulty"]
 }
 ```
@@ -211,7 +211,7 @@ Doesn't require arguments, returns true if the current difficulty is easy.
 Doesn't require arguments, returns true if the current difficulty is normal.
 
 ```jsonc
-"conditions": "is_normal_difficulty"
+"smart_recipes:conditions": "is_normal_difficulty"
 ```
 
 ### `is_hard_difficulty`
@@ -219,7 +219,7 @@ Doesn't require arguments, returns true if the current difficulty is normal.
 Doesn't require arguments, returns true if the current difficulty is hard.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "is_hard_difficulty": null
 }
 ```
@@ -229,7 +229,7 @@ Doesn't require arguments, returns true if the current difficulty is hard.
 Returns true if one of the specified values matches the current difficulty.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "difficulty_check": [
     0, // Ordinal number of the Peaceful difficulty
     1, // Ordinal number of the Easy difficulty
@@ -248,7 +248,7 @@ Returns true if one of the specified values matches the current difficulty.
 Doesn't require arguments, returns true if the default gamemode is survival.
 
 ```jsonc
-"conditions": "is_survival"
+"smart_recipes:conditions": "is_survival"
 ```
 
 ### `is_creative`
@@ -256,7 +256,7 @@ Doesn't require arguments, returns true if the default gamemode is survival.
 Doesn't require arguments, returns true if the default gamemode is creative.
 
 ```jsonc
-"conditions": ["is_creative"]
+"smart_recipes:conditions": ["is_creative"]
 ```
 
 ### `is_adventure`
@@ -264,7 +264,7 @@ Doesn't require arguments, returns true if the default gamemode is creative.
 Doesn't require arguments, returns true if the default gamemode is adventure.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "is_adventure": {}
 }
 ```
@@ -274,7 +274,7 @@ Doesn't require arguments, returns true if the default gamemode is adventure.
 Doesn't require arguments, returns true if the default gamemode is spectator.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "not": "is_spectator"
 }
 ```
@@ -284,7 +284,7 @@ Doesn't require arguments, returns true if the default gamemode is spectator.
 Returns true if one of the specified values matches the default gamemode.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "gamemode_check": [
     0, // Ordinal number of the Survival gamemode
     1, // Ordinal number of the Creative gamemode
@@ -303,7 +303,7 @@ Returns true if one of the specified values matches the default gamemode.
 Returns true if one of the specified strings matches the current [weather in the Overworld dimension](https://minecraft.fandom.com/wiki/Weather).
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "weather_check": [
     "clear",    // Weather is clear
     "rain",     // It's raining or thundering
@@ -317,7 +317,7 @@ Returns true if one of the specified strings matches the current [weather in the
 Returns true if one of the specified strings matches the current [time in the Overworld dimension](https://minecraft.fandom.com/wiki/Daylight_cycle).
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "time_check": [
     "day",      // from 1000  to 12999 ticks
     "noon",     // from 5000  to 6999  ticks
@@ -334,7 +334,7 @@ Returns true if one of the specified strings matches the current [time in the Ov
 Returns true if all the specified players are online.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "players_online": [
     "Notch",
     "Dinnerbone",
@@ -348,7 +348,7 @@ Returns true if all the specified players are online.
 Returns true if all the specified blocks are registered.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "blocks_registered": [
     "stone",
     "minecraft:dirt",
@@ -362,7 +362,7 @@ Returns true if all the specified blocks are registered.
 Returns true if all the specified items are registered.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "items_registered": [
     "stone",
     "minecraft:dirt",
@@ -376,7 +376,7 @@ Returns true if all the specified items are registered.
 Returns true if all the specified block entities are registered.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "block_entities_registered": [
     "furnance",
     "minecraft:chest",
@@ -390,7 +390,7 @@ Returns true if all the specified block entities are registered.
 Returns true if all the specified registry entries are registered.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "entries_registered": [
     {
       "registry": "block",
@@ -413,7 +413,7 @@ Returns true if all the specified registry entries are registered.
 Returns true if all the specified mods are loaded.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "fabric:mods_loaded": [
     {
       "id": "smart-recipes",
@@ -434,12 +434,12 @@ Returns true if all the specified mods are loaded.
 Reload recipes when player joins to/disconnects from the server.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "not": {
     "players_online": "Nickname"
   }
 },
-"reload_conditions": [
+"smart_recipes:reload_conditions": [
   "player_joined",
   "player_disconnected"
 ]
@@ -450,8 +450,8 @@ Reload recipes when player joins to/disconnects from the server.
 Reloads recipes when difficulty changes.
 
 ```jsonc
-"conditions": "is_easy_difficulty",
-"reload_conditions": "difficulty_changed"
+"smart_recipes:conditions": "is_easy_difficulty",
+"smart_recipes:reload_conditions": "difficulty_changed"
 ```
 
 ### `gamemode_changed`
@@ -459,13 +459,13 @@ Reloads recipes when difficulty changes.
 Reloads recipes when the default gamemode changes.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "gamemode_check": [
     "survival",
     "creative"
   ]
 },
-"reload_conditions": ["gamemode_changed"]
+"smart_recipes:reload_conditions": ["gamemode_changed"]
 ```
 
 ### `weather_changed`
@@ -473,10 +473,10 @@ Reloads recipes when the default gamemode changes.
 Reloads recipes when weather changes.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "weather_check": "thunder"
 },
-"reload_conditions": "weather_changed"
+"smart_recipes:reload_conditions": "weather_changed"
 ```
 
 ### `time_changed`
@@ -484,13 +484,13 @@ Reloads recipes when weather changes.
 Reloads recipes when time changes.
 
 ```jsonc
-"conditions": {
+"smart_recipes:conditions": {
   "time_check": [
     "noon",
     "midnight"
   ]
 },
-"reload_conditions": [
+"smart_recipes:reload_conditions": [
   "time_changed"
 ]
 ```
@@ -556,7 +556,7 @@ And from words to deeds:
   // Here's where the fun begins.
   // We need to describe our conditions for this recipe to be loaded in the
   // `conditions` section. If multiple conditions are specified, all must pass.
-  "conditions": {
+  "smart_recipes:conditions": {
     // #1
     "time_check": [
       "midnight",
@@ -587,7 +587,7 @@ And from words to deeds:
   // By default, conditions are evaluated only when the server starts.
   // So, if we want to keep our recipes up-to-date with the actual
   // state of the game, we need to add `reload_conditions`.
-  "reload_conditions": [
+  "smart_recipes:reload_conditions": [
     // #1
     // Reloads the recipe when time changes.
     "time_changed",

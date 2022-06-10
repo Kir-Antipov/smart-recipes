@@ -14,7 +14,7 @@ public final class JsonUtil {
 
     public static JsonElement get(JsonObject jsonObject, Identifier memberId) {
         JsonElement member = jsonObject.get(memberId.toString());
-        return member == null ? jsonObject.get(memberId.getPath()) : member;
+        return member == null && Identifier.DEFAULT_NAMESPACE.equals(memberId.getNamespace()) ? jsonObject.get(memberId.getPath()) : member;
     }
 
     public static Stream<JsonPrimitive> flatMap(JsonElement jsonElement) {

@@ -2,6 +2,7 @@ package dev.kir.smartrecipes.api;
 
 import com.google.gson.*;
 import com.mojang.serialization.Lifecycle;
+import dev.kir.smartrecipes.SmartRecipes;
 import dev.kir.smartrecipes.util.JsonUtil;
 import dev.kir.smartrecipes.util.world.TimeOfDay;
 import net.fabricmc.loader.api.FabricLoader;
@@ -22,7 +23,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 final class RecipeConditions {
-    public static final RegistryKey<Registry<RecipeCondition>> KEY = RegistryKey.ofRegistry(new Identifier("recipe_condition"));
+    public static final RegistryKey<Registry<RecipeCondition>> KEY = RegistryKey.ofRegistry(SmartRecipes.locate("recipe_condition"));
     public static final Registry<RecipeCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental(), null);
 
 

@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class SmartRecipes implements ClientModInitializer {
-    public static final String MOD_ID = "smart-recipes";
+    public static final String MOD_ID = "smart_recipes";
     public static final Logger LOGGER = LogManager.getLogger();
     public static final SmartRecipesConfig CONFIG = SmartRecipesConfig.load();
 
