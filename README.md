@@ -4,7 +4,7 @@
 [![GitHub tag](https://img.shields.io/github/v/tag/Kir-Antipov/smart-recipes.svg?cacheSeconds=3600&sort=date)](https://github.com/Kir-Antipov/smart-recipes/releases/latest)
 [![GitHub build status](https://img.shields.io/github/actions/workflow/status/Kir-Antipov/smart-recipes/build-artifacts.yml?branch=1.19.x/dev&cacheSeconds=3600)](https://github.com/Kir-Antipov/smart-recipes/actions/workflows/build-artifacts.yml)
 [![Modrinth](https://img.shields.io/badge/dynamic/json?color=00AF5C&label=Modrinth&query=title&url=https://api.modrinth.com/v2/project/smart-recipes&style=flat&cacheSeconds=3600&logo=modrinth)](https://modrinth.com/mod/smart-recipes)
-[![CurseForge](https://img.shields.io/badge/dynamic/json?color=%23f16436&label=CurseForge&query=title&url=https%3A%2F%2Fapi.cfwidget.com%2F522139&cacheSeconds=3600)](https://www.curseforge.com/minecraft/mc-mods/smart-recipes)
+[![CurseForge](https://img.shields.io/badge/dynamic/json?color=%23f16436&label=CurseForge&query=title&url=https%3A%2F%2Fapi.cfwidget.com%2F522139&cacheSeconds=3600&logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/smart-recipes)
 [![GitHub license](https://img.shields.io/github/license/Kir-Antipov/smart-recipes.svg?cacheSeconds=36000)](https://github.com/Kir-Antipov/smart-recipes#readme)
 
 Have you ever found the standard Minecraft recipe format boring? Or have you ever wanted to make the game a little more event-based, like Terraria? Then `Smart Recipes` is what you need! Cook your own unique experience with the new conditional recipe format!
