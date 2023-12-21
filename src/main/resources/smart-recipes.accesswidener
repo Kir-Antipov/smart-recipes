@@ -1,3 +1,4 @@
-accessWidener v1 named
+accessWidener v2 named
 
 accessible method net/minecraft/recipe/book/RecipeBook remove (Lnet/minecraft/util/Identifier;)V
+accessible method net/minecraft/recipe/RecipeManager deserialize (Lnet/minecraft/util/Identifier;Lcom/google/gson/JsonObject;)Lnet/minecraft/recipe/RecipeEntry;

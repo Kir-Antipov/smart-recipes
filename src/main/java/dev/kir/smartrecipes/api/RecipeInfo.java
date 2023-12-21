@@ -3,6 +3,7 @@ package dev.kir.smartrecipes.api;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
@@ -14,7 +15,7 @@ import java.util.Optional;
 public class RecipeInfo {
     private final Identifier recipeId;
     private final JsonObject recipeObject;
-    private Recipe<?> recipe;
+    private RecipeEntry<?> recipeEntry;
     private RecipeType<?> recipeType;
 
     public RecipeInfo(Identifier recipeId, JsonObject recipeObject) {
@@ -31,8 +32,8 @@ public class RecipeInfo {
     }
 
     public Optional<RecipeType<?>> getRecipeType() {
-        if (this.recipe != null) {
-            return Optional.of(this.recipe.getType());
+        if (this.recipeEntry != null) {
+            return Optional.of(this.recipeEntry.value().getType());
         }
 
         if (this.recipeType == null && this.recipeObject != null) {
@@ -45,15 +46,19 @@ public class RecipeInfo {
         return Optional.ofNullable(this.recipeType);
     }
 
-    public Optional<Recipe<?>> getRecipe() {
-        if (this.recipe == null && this.recipeId != null && this.recipeObject != null) {
+    public Optional<RecipeEntry<?>> getRecipeEntry() {
+        if (this.recipeEntry == null && this.recipeId != null && this.recipeObject != null) {
             try {
-                this.recipe = RecipeManager.deserialize(this.recipeId, this.recipeObject);
+                this.recipeEntry = RecipeManager.deserialize(this.recipeId, this.recipeObject);
             } catch (Throwable e) {
-                this.recipe = null;
+                this.recipeEntry = null;
             }
         }
-        return Optional.ofNullable(this.recipe);
+        return Optional.ofNullable(this.recipeEntry);
+    }
+
+    public Optional<Recipe<?>> getRecipe() {
+        return this.getRecipeEntry().map(RecipeEntry::value);
     }
 
     @Contract(value = "_, _ -> new", pure = true)

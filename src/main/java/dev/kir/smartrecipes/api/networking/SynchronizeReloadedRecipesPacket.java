@@ -12,10 +12,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeManager;
-import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.*;
 import net.minecraft.recipe.book.RecipeBook;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -60,16 +57,16 @@ public class SynchronizeReloadedRecipesPacket {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends Recipe<?>> void writeRecipeEntry(PacketByteBuf buf, Pair<ReloadableRecipeManager.RecipeState, RecipeInfo> recipeEntry) {
+    private static <T extends RecipeEntry<U>, U extends Recipe<?>> void writeRecipeEntry(PacketByteBuf buf, Pair<ReloadableRecipeManager.RecipeState, RecipeInfo> recipeEntry) {
         ReloadableRecipeManager.RecipeState state = recipeEntry.getLeft();
         RecipeInfo recipeInfo = recipeEntry.getRight();
         if (state == ReloadableRecipeManager.RecipeState.KEEP) {
-            T recipe = (T)recipeInfo.getRecipe().orElseThrow(() -> new IllegalArgumentException("Unable to parse recipe '" + recipeInfo.getRecipeId() + "'"));
+            T recipe = (T)recipeInfo.getRecipeEntry().orElseThrow(() -> new IllegalArgumentException("Unable to parse recipe '" + recipeInfo.getRecipeId() + "'"));
 
             buf.writeBoolean(true);
-            buf.writeIdentifier(Registries.RECIPE_SERIALIZER.getId(recipe.getSerializer()));
-            buf.writeIdentifier(recipe.getId());
-            ((RecipeSerializer<T>)recipe.getSerializer()).write(buf, recipe);
+            buf.writeIdentifier(Registries.RECIPE_SERIALIZER.getId(recipe.value().getSerializer()));
+            buf.writeIdentifier(recipe.id());
+            ((RecipeSerializer<U>)recipe.value().getSerializer()).write(buf, recipe.value());
         } else {
             buf.writeBoolean(false);
             buf.writeIdentifier(recipeInfo.getRecipeId());
@@ -82,7 +79,7 @@ public class SynchronizeReloadedRecipesPacket {
             Identifier serializerId = buf.readIdentifier();
             RecipeSerializer<?> serializer = Registries.RECIPE_SERIALIZER.getOrEmpty(serializerId).orElseThrow(() -> new IllegalArgumentException("Unknown recipe serializer " + serializerId));
             Identifier recipeId = buf.readIdentifier();
-            Recipe<?> recipe = serializer.read(recipeId, buf);
+            Recipe<?> recipe = serializer.read(buf);
             return new Pair<>(ReloadableRecipeManager.RecipeState.KEEP, new SerializableRecipeInfo(recipeId, recipe));
         } else {
             Identifier recipeId = buf.readIdentifier();
@@ -106,6 +103,11 @@ public class SynchronizeReloadedRecipesPacket {
             super(recipeId, null);
             this.recipe = recipe;
             this.recipeType = null;
+        }
+
+        @Override
+        public Optional<RecipeEntry<?>> getRecipeEntry() {
+            return this.getRecipe().map(recipe -> new RecipeEntry<>(this.getRecipeId(), recipe));
         }
 
         @Override

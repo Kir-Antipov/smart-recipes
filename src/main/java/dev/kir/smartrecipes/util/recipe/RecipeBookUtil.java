@@ -12,7 +12,7 @@ import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.search.SearchManager;
 import net.minecraft.client.toast.RecipeToast;
-import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.book.RecipeBook;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.network.ServerRecipeBook;
@@ -37,8 +37,8 @@ public final class RecipeBookUtil {
             ReloadableRecipeManager.RecipeState recipeState = entry.getLeft();
             RecipeInfo recipeInfo = entry.getRight();
             Identifier recipeId = recipeInfo.getRecipeId();
-            if (recipeState == ReloadableRecipeManager.RecipeState.KEEP && recipeInfo.getRecipe().isPresent()) {
-                Recipe<?> recipe = recipeInfo.getRecipe().get();
+            if (recipeState == ReloadableRecipeManager.RecipeState.KEEP && recipeInfo.getRecipeEntry().isPresent()) {
+                RecipeEntry<?> recipe = recipeInfo.getRecipeEntry().get();
                 if (showRecipeToasts && isClient && !(recipeBook instanceof ServerRecipeBook) && !recipeBook.contains(recipeId)) {
                     recipeBook.display(recipe);
                     showRecipeToast(recipe);
@@ -76,7 +76,7 @@ public final class RecipeBookUtil {
     }
 
     @Environment(EnvType.CLIENT)
-    private static void showRecipeToast(Recipe<?> recipe) {
+    private static void showRecipeToast(RecipeEntry<?> recipe) {
         RecipeToast.show(MinecraftClient.getInstance().getToastManager(), recipe);
     }
 }

@@ -2,13 +2,13 @@ package dev.kir.smartrecipes.mixin;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import dev.kir.smartrecipes.api.*;
-import dev.kir.smartrecipes.util.JsonUtil;
 import dev.kir.smartrecipes.SmartRecipes;
+import dev.kir.smartrecipes.api.*;
 import dev.kir.smartrecipes.api.networking.SynchronizeReloadedRecipesPacket;
+import dev.kir.smartrecipes.util.JsonUtil;
 import dev.kir.smartrecipes.util.recipe.RecipeBookUtil;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.resource.ResourceManager;
@@ -41,7 +41,7 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
     private static final Identifier OBSOLETE_RELOAD_CONDITIONS = new Identifier("reload_conditions");
 
     @Shadow
-    private Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes;
+    private Map<RecipeType<?>, Map<Identifier, RecipeEntry<?>>> recipes;
 
     @Unique
     private Map<Identifier, Collection<Map.Entry<Identifier, JsonElement>>> waitingForReload;
@@ -157,7 +157,7 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
             return;
         }
 
-        Map<RecipeType<?>, Map<Identifier, Recipe<?>>> mutableRecipes = makeMutable(this.recipes);
+        Map<RecipeType<?>, Map<Identifier, RecipeEntry<?>>> mutableRecipes = makeMutable(this.recipes);
         for (Pair<RecipeState, RecipeInfo> entry : diff) {
             RecipeState recipeState = entry.getLeft();
             RecipeInfo recipeInfo = entry.getRight();
@@ -166,11 +166,11 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
                 RecipeType<?> recipeType = recipeInfo.getRecipeType().orElseThrow(() -> new IllegalArgumentException("Recipe '" + recipeId + "' uses invalid or unsupported recipe type"));
                 switch (recipeState) {
                     case KEEP -> {
-                        Map<Identifier, Recipe<?>> container = mutableRecipes.computeIfAbsent(recipeType, x -> new HashMap<>());
-                        container.put(recipeId, recipeInfo.getRecipe().orElseThrow(() -> new IllegalArgumentException("Unable to parse recipe '" + recipeId + "'")));
+                        Map<Identifier, RecipeEntry<?>> container = mutableRecipes.computeIfAbsent(recipeType, x -> new HashMap<>());
+                        container.put(recipeId, recipeInfo.getRecipeEntry().orElseThrow(() -> new IllegalArgumentException("Unable to parse recipe '" + recipeId + "'")));
                     }
                     case REMOVE -> {
-                        Map<Identifier, Recipe<?>> container = mutableRecipes.get(recipeType);
+                        Map<Identifier, RecipeEntry<?>> container = mutableRecipes.get(recipeType);
                         if (container != null) {
                             container.remove(recipeId);
                         }
@@ -201,7 +201,7 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
     }
 
     @Unique
-    private static Map<RecipeType<?>, Map<Identifier, Recipe<?>>> makeMutable(Map<RecipeType<?>, Map<Identifier, Recipe<?>>> recipes) {
+    private static Map<RecipeType<?>, Map<Identifier, RecipeEntry<?>>> makeMutable(Map<RecipeType<?>, Map<Identifier, RecipeEntry<?>>> recipes) {
         if (recipes instanceof HashMap<?, ?>) {
             return recipes;
         }
