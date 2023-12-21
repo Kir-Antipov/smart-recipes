@@ -15,7 +15,6 @@ loom {
     accessWidenerPath = file("src/main/resources/smart-recipes.accesswidener")
 }
 
-// To change the versions see the gradle.properties file
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
@@ -37,11 +36,10 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     // Ensure that the encoding is set to UTF-8, no matter what the system default is
-    // this fixes some edge cases with special characters not displaying correctly
-    // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
+    // this fixes some edge cases with special characters not displaying correctly.
     // If Javadoc is generated, this must be specified in that task too.
+    // See http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
     it.options.encoding = "UTF-8"
-
     it.options.release.set(17)
 }
 
@@ -51,35 +49,6 @@ java {
 
 jar {
     from "LICENSE.md"
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
-            }
-
-            pom {
-                name = "Smart Recipes"
-                description = "A Fabric mod that extends recipe format with conditions."
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            name "GitHub"
-            url "https://maven.pkg.github.com/Kir-Antipov/smart-recipes"
-            credentials {
-                username = project.findProperty("GITHUB_ACTOR") ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("GITHUB_TOKEN") ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
 }
 
 @SuppressWarnings("GrMethodMayBeStatic") // It cannot
