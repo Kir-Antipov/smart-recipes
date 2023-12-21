@@ -1,25 +1,26 @@
 ![Logo](media/logo.png)
 
 # Smart Recipes
-[![GitHub tag](https://img.shields.io/github/v/tag/Kir-Antipov/smart-recipes.svg?cacheSeconds=3600&sort=date)](https://github.com/Kir-Antipov/smart-recipes/releases/latest)
-[![GitHub build status](https://img.shields.io/github/workflow/status/Kir-Antipov/smart-recipes/build-artifacts/1.19.x/dev?cacheSeconds=3600)](https://github.com/Kir-Antipov/smart-recipes/actions/workflows/build-artifacts.yml)
-[![Modrinth](https://img.shields.io/badge/dynamic/json?color=5da545&label=Modrinth&query=title&url=https://api.modrinth.com/api/v1/mod/smart-recipes&style=flat&cacheSeconds=3600&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMSAxMSIgd2lkdGg9IjE0LjY2NyIgaGVpZ2h0PSIxNC42NjciICB4bWxuczp2PSJodHRwczovL3ZlY3RhLmlvL25hbm8iPjxkZWZzPjxjbGlwUGF0aCBpZD0iQSI+PHBhdGggZD0iTTAgMGgxMXYxMUgweiIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNBKSI+PHBhdGggZD0iTTEuMzA5IDcuODU3YTQuNjQgNC42NCAwIDAgMS0uNDYxLTEuMDYzSDBDLjU5MSA5LjIwNiAyLjc5NiAxMSA1LjQyMiAxMWMxLjk4MSAwIDMuNzIyLTEuMDIgNC43MTEtMi41NTZoMGwtLjc1LS4zNDVjLS44NTQgMS4yNjEtMi4zMSAyLjA5Mi0zLjk2MSAyLjA5MmE0Ljc4IDQuNzggMCAwIDEtMy4wMDUtMS4wNTVsMS44MDktMS40NzQuOTg0Ljg0NyAxLjkwNS0xLjAwM0w4LjE3NCA1LjgybC0uMzg0LS43ODYtMS4xMTYuNjM1LS41MTYuNjk0LS42MjYuMjM2LS44NzMtLjM4N2gwbC0uMjEzLS45MS4zNTUtLjU2Ljc4Ny0uMzcuODQ1LS45NTktLjcwMi0uNTEtMS44NzQuNzEzLTEuMzYyIDEuNjUxLjY0NSAxLjA5OC0xLjgzMSAxLjQ5MnptOS42MTQtMS40NEE1LjQ0IDUuNDQgMCAwIDAgMTEgNS41QzExIDIuNDY0IDguNTAxIDAgNS40MjIgMCAyLjc5NiAwIC41OTEgMS43OTQgMCA0LjIwNmguODQ4QzEuNDE5IDIuMjQ1IDMuMjUyLjgwOSA1LjQyMi44MDljMi42MjYgMCA0Ljc1OCAyLjEwMiA0Ljc1OCA0LjY5MSAwIC4xOS0uMDEyLjM3Ni0uMDM0LjU2bC43NzcuMzU3aDB6IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiM1ZGE0MjYiLz48L2c+PC9zdmc+)](https://modrinth.com/mod/smart-recipes)
-[![CurseForge](https://img.shields.io/badge/dynamic/json?color=%23f16436&label=CurseForge&query=title&url=https%3A%2F%2Fapi.cfwidget.com%2F522139&cacheSeconds=3600)](https://www.curseforge.com/minecraft/mc-mods/smart-recipes)
-[![GitHub license](https://img.shields.io/github/license/Kir-Antipov/smart-recipes.svg?cacheSeconds=36000)](https://github.com/Kir-Antipov/smart-recipes#readme)
 
-Have you ever found the standard Minecraft recipe format boring? Or have you ever wanted to make the game a little more event-based, like Terraria? Then `Smart Recipes` is what you need! Cook your own unique experience with the new conditional recipe format!
+[![GitHub Build Status](https://img.shields.io/github/actions/workflow/status/Kir-Antipov/smart-recipes/build-artifacts.yml?style=flat&logo=github&cacheSeconds=3600)](https://github.com/Kir-Antipov/smart-recipes/actions/workflows/build-artifacts.yml)
+[![Version](https://img.shields.io/github/v/release/Kir-Antipov/smart-recipes?sort=date&style=flat&label=version&cacheSeconds=3600)](https://github.com/Kir-Antipov/smart-recipes/releases/latest)
+[![Modrinth](https://img.shields.io/badge/dynamic/json?color=00AF5C&label=Modrinth&query=title&url=https://api.modrinth.com/v2/project/smart-recipes&style=flat&cacheSeconds=3600&logo=modrinth)](https://modrinth.com/mod/smart-recipes)
+[![CurseForge](https://img.shields.io/badge/dynamic/json?color=F16436&label=CurseForge&query=title&url=https://api.cfwidget.com/522139&cacheSeconds=3600&logo=curseforge)](https://www.curseforge.com/minecraft/mc-mods/smart-recipes)
+[![License](https://img.shields.io/github/license/Kir-Antipov/smart-recipes?style=flat&cacheSeconds=36000)](https://github.com/Kir-Antipov/smart-recipes/blob/HEAD/LICENSE.md)
+
+Do you find the standard Minecraft recipe format boring? Or maybe you wish to make the game more event-based, like Terraria? If so, `Smart Recipes` is what you need! Craft your own unique experience with our new conditional recipe format!
 
 ----
 
 ## Format
 
-*If you prefer a working example to explanations, you can skip straight to the [Example](#example) section. Don't forget to revisit [Conditions](#conditions) and [Reload Conditions](#reload-conditions) when you're done, though.*
+If you prefer a practical example over explanations, feel free to skip directly to the [Example](#example) section. However, don't forget to revisit the [Conditions](#conditions) and [Reload Conditions](#reload-conditions) sections later.
 
 ### Conditions Format
 
-`Smart Recipes` mod extends [vanilla recipe format](https://minecraft.fandom.com/wiki/Recipe), so make sure that you understand how it works; otherwise, everything I describe here won't make any sense.
+The `Smart Recipes` mod extends the [vanilla recipe format](https://minecraft.wiki/Recipe). It's crucial to understand how the vanilla format works; otherwise, the following descriptions may not make sense.
 
-This mod adds brand new `smart_recipes:conditions` property to the recipe format. It's similar*(-ish)* to loot tables' conditions. Let's take a look at it:
+This mod introduces a new `smart_recipes:conditions` property to the recipe format. It's somewhat similar to the conditions in loot tables. Let's take a closer look it:
 
 ```jsonc
 "smart_recipes:conditions": []
@@ -47,7 +48,7 @@ This property determines conditions for the recipe to be loaded. If multiple con
 ]
 ```
 
-Exactly the same as loot tables' conditions. But do you know what the problem is? I completely dislike them, because they're too verbose. How can we make things better?
+This example is identical to how conditions in loot tables are usually written. However, I find them too verbose. Let's explore how we can improve our conditions.
 
 ```jsonc
 // Let's turn this condition declaration:
@@ -75,7 +76,7 @@ Much better, don't you think?
 ]
 ```
 
-Better, but still can be better! Let's combine our conditions into a single object:
+This is even better than before, but there is still some room for imporvement. Let's consolidate our conditions into a single object:
 
 ```jsonc
 "smart_recipes:conditions": [
@@ -86,7 +87,7 @@ Better, but still can be better! Let's combine our conditions into a single obje
 ]
 ```
 
-And here goes one last thing. If an array contains only one object, the `Smart Recipes` mod allows you to omit its declaration! So here's the final result:
+Finally, if an array contains only one object, the `Smart Recipes` mod allows you to omit its declaration. Here's the final result:
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -95,13 +96,13 @@ And here goes one last thing. If an array contains only one object, the `Smart R
 }
 ```
 
-I should note, that `Smart Recipes` can parse **every** single one of the examples above, so you can choose whichever style you like best.
+I should note that `Smart Recipes` can parse **every** single one of the examples above, so you can choose the style you prefer.
 
 ### Reload Conditions Format
 
-Reload conditions allow recipe conditions to be re-evaluated on some occasions. It can be useful if your recipe relies on weather, time and/or other volatile entities.
+Reload conditions allow recipe conditions to be re-evaluated on different occasions. It can be useful if your recipe relies on weather, time and/or other volatile entities.
 
-There's nothing complex here at all. Everything you need to do is provide names of the available reload conditions that your recipe depends on:
+This process is surprisingly straightforward. All you need to do is provide the names of the reload conditions that your recipe depends on:
 
 ```jsonc
 "smart_recipes:reload_conditions": [
@@ -116,7 +117,7 @@ There's nothing complex here at all. Everything you need to do is provide names 
 
 ### `false`
 
-Doesn't require arguments, always returns false.
+Doesn't require arguments, always returns `false`.
 
 ```jsonc
 "smart_recipes:conditions": [
@@ -126,7 +127,7 @@ Doesn't require arguments, always returns false.
 
 ### `true`
 
-Doesn't require arguments, always returns (you guessed it) true.
+Doesn't require arguments, always returns `true`.
 
 ```jsonc
 "smart_recipes:conditions": [
@@ -136,7 +137,7 @@ Doesn't require arguments, always returns (you guessed it) true.
 
 ### `or` and `any`
 
-Return true if any of the specified conditions returns true.
+Return `true` if any of the specified conditions returns `true`.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -150,7 +151,7 @@ Return true if any of the specified conditions returns true.
 
 ### `and` and `all`
 
-Return true if all the specified conditions return true.
+Return `true` if all the specified conditions return `true`.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -163,7 +164,7 @@ Return true if all the specified conditions return true.
 
 ### `not` and `none`
 
-Return true if none of the specified conditions return true.
+Return `true` if none of the specified conditions return `true`.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -175,7 +176,7 @@ Return true if none of the specified conditions return true.
 
 ### `is_hardcore`
 
-Doesn't require arguments, returns true if the server is in the hardcore mode.
+Doesn't require arguments, returns `true` if the server is in Hardcore mode.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -185,7 +186,7 @@ Doesn't require arguments, returns true if the server is in the hardcore mode.
 
 ### `is_peaceful_difficulty`
 
-Doesn't require arguments, returns true if the current difficulty is peaceful.
+Doesn't require arguments, returns `true` if the current difficulty is Peaceful.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -198,7 +199,7 @@ Doesn't require arguments, returns true if the current difficulty is peaceful.
 
 ### `is_easy_difficulty`
 
-Doesn't require arguments, returns true if the current difficulty is easy.
+Doesn't require arguments, returns `true` if the current difficulty is Easy.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -208,7 +209,7 @@ Doesn't require arguments, returns true if the current difficulty is easy.
 
 ### `is_normal_difficulty`
 
-Doesn't require arguments, returns true if the current difficulty is normal.
+Doesn't require arguments, returns `true` if the current difficulty is Normal.
 
 ```jsonc
 "smart_recipes:conditions": "is_normal_difficulty"
@@ -216,7 +217,7 @@ Doesn't require arguments, returns true if the current difficulty is normal.
 
 ### `is_hard_difficulty`
 
-Doesn't require arguments, returns true if the current difficulty is hard.
+Doesn't require arguments, returns `true` if the current difficulty is Hard.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -226,7 +227,7 @@ Doesn't require arguments, returns true if the current difficulty is hard.
 
 ### `difficulty_check`
 
-Returns true if one of the specified values matches the current difficulty.
+Returns `true` if one of the specified values matches the current difficulty.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -245,7 +246,7 @@ Returns true if one of the specified values matches the current difficulty.
 
 ### `is_survival`
 
-Doesn't require arguments, returns true if the default gamemode is survival.
+Doesn't require arguments, returns `true` if the default gamemode is Survival.
 
 ```jsonc
 "smart_recipes:conditions": "is_survival"
@@ -253,7 +254,7 @@ Doesn't require arguments, returns true if the default gamemode is survival.
 
 ### `is_creative`
 
-Doesn't require arguments, returns true if the default gamemode is creative.
+Doesn't require arguments, returns `true` if the default gamemode is Creative.
 
 ```jsonc
 "smart_recipes:conditions": ["is_creative"]
@@ -261,7 +262,7 @@ Doesn't require arguments, returns true if the default gamemode is creative.
 
 ### `is_adventure`
 
-Doesn't require arguments, returns true if the default gamemode is adventure.
+Doesn't require arguments, returns `true` if the default gamemode is Adventure.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -271,7 +272,7 @@ Doesn't require arguments, returns true if the default gamemode is adventure.
 
 ### `is_spectator`
 
-Doesn't require arguments, returns true if the default gamemode is spectator.
+Doesn't require arguments, returns `true` if the default gamemode is Spectator.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -281,7 +282,7 @@ Doesn't require arguments, returns true if the default gamemode is spectator.
 
 ### `gamemode_check`
 
-Returns true if one of the specified values matches the default gamemode.
+Returns `true` if one of the specified values matches the default gamemode.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -300,7 +301,7 @@ Returns true if one of the specified values matches the default gamemode.
 
 ### `weather_check`
 
-Returns true if one of the specified strings matches the current [weather in the Overworld dimension](https://minecraft.fandom.com/wiki/Weather).
+Returns `true` if one of the specified strings matches the current [weather in the Overworld dimension](https://minecraft.wiki/Weather).
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -314,7 +315,7 @@ Returns true if one of the specified strings matches the current [weather in the
 
 ### `time_check`
 
-Returns true if one of the specified strings matches the current [time in the Overworld dimension](https://minecraft.fandom.com/wiki/Daylight_cycle).
+Returns `true` if one of the specified strings matches the current [time in the Overworld dimension](https://minecraft.wiki/Daylight_cycle).
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -331,7 +332,7 @@ Returns true if one of the specified strings matches the current [time in the Ov
 
 ### `players_online`
 
-Returns true if all the specified players are online.
+Returns `true` if all the specified players are online.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -345,7 +346,7 @@ Returns true if all the specified players are online.
 
 ### `blocks_registered`
 
-Returns true if all the specified blocks are registered.
+Returns `true` if all the specified blocks are registered.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -359,7 +360,7 @@ Returns true if all the specified blocks are registered.
 
 ### `items_registered`
 
-Returns true if all the specified items are registered.
+Returns `true` if all the specified items are registered.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -373,7 +374,7 @@ Returns true if all the specified items are registered.
 
 ### `block_entities_registered`
 
-Returns true if all the specified block entities are registered.
+Returns `true` if all the specified block entities are registered.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -387,7 +388,7 @@ Returns true if all the specified block entities are registered.
 
 ### `entries_registered`
 
-Returns true if all the specified registry entries are registered.
+Returns `true` if all the specified registry entries are registered.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -410,7 +411,7 @@ Returns true if all the specified registry entries are registered.
 
 ### `fabric:mods_loaded`
 
-Returns true if all the specified mods are loaded.
+Returns `true` if all the specified mods are loaded.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -447,7 +448,7 @@ Reload recipes when player joins to/disconnects from the server.
 
 ### `difficulty_changed`
 
-Reloads recipes when difficulty changes.
+Reloads recipes when the current difficulty changes.
 
 ```jsonc
 "smart_recipes:conditions": "is_easy_difficulty",
@@ -470,7 +471,7 @@ Reloads recipes when the default gamemode changes.
 
 ### `weather_changed`
 
-Reloads recipes when weather changes.
+Reloads recipes when the current weather changes.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -481,7 +482,7 @@ Reloads recipes when weather changes.
 
 ### `time_changed`
 
-Reloads recipes when time changes.
+Reloads recipes when the current time changes.
 
 ```jsonc
 "smart_recipes:conditions": {
@@ -499,7 +500,7 @@ Reloads recipes when time changes.
 
 ## Example
 
-Let's imagine that we want to add a simplified TNT recipe:
+Consider a scenario where we want to add a simplified TNT recipe:
 
 ```jsonc
 {
@@ -523,14 +524,14 @@ Let's imagine that we want to add a simplified TNT recipe:
 }
 ```
 
-Now it's time to add some sweet conditions. Here are our goals:
+Now, let's add some conditions. Here are our objectives:
 
- 1) This recipe should be available only at `midnight` and `sunrise`, 'cause nobody crafts explosives in the light of day
- 2) The recipe should be available only when `weather's clear`, 'cause we don't want our gunpowder to get damp
- 3) The recipe should `not` be available when `Vladimir is online`, 'cause we don't trust Vladimir with deadly weapons
- 4) The recipe should be available only on the `hard` difficulty, 'cause... why not?
+ 1) This recipe should only be available at `midnight` and `sunrise`, because nobody crafts explosives in the light of day.
+ 2) The recipe should only be available when the `weather is clear`, to prevent the gunpowder from getting damp.
+ 3) The recipe should `not` be available when `Vladimir is online`, as we don't trust Vladimir with deadly weapons.
+ 4) The recipe should only be available on the `hard` difficulty, because... why not?
 
-And from words to deeds:
+Time to put our plan into action:
 
 ```jsonc
 {
@@ -564,7 +565,7 @@ And from words to deeds:
     ],
 
     // #2
-    // Note, that `weather_check` usually consumes an array (just like `time_check` does),
+    // Note that `weather_check` usually consumes an array (just like `time_check` does),
     // but since we need to pass only one value, it can be omitted.
     "weather_check": "clear",
 
@@ -597,14 +598,14 @@ And from words to deeds:
     "weather_changed",
 
     // #3
-    // These reload the recipe when player joins to/disconnects from the server.
+    // These reload the recipe when a player joins or disconnects from the server.
     // I may combine these two into a single one in the future.
     "player_joined",
     "player_disconnected",
 
     // #4
     // Reloads the recipe when difficulty changes.
-    // Tbh, I don't think you really need it,
+    // To be honest, I don't think you really need it,
     // because difficulty is locked on most servers,
     // so it's fine to evaluate difficulty-based conditions
     // only on server start.
@@ -629,25 +630,25 @@ You can download the mod from:
  - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/smart-recipes)
  - [GitHub Actions](https://github.com/Kir-Antipov/smart-recipes/actions/workflows/build-artifacts.yml) *(these builds may be unstable, but they represent the actual state of the development)*
 
-## Using as a dependency
+## Using as a Dependency
 
-You can include `Smart Recipes` into your mod to use the new conditional format without forcing players to download it separately.
+You can include `Smart Recipes` in your mod to use the new conditional format without requiring players to download it separately.
 
 `build.gradle`:
 
 ```groovy
 repositories {
-    maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-        content {
-            includeGroup "maven.modrinth"
-        }
+  maven {
+    name = "Modrinth"
+    url = "https://api.modrinth.com/maven"
+    content {
+      includeGroup "maven.modrinth"
     }
+  }
 }
 
 dependencies {
-    modImplementation "maven.modrinth:smart-recipes:${project.smart_recipes_version}"
+  modImplementation "maven.modrinth:smart-recipes:${project.smart_recipes_version}"
 }
 ```
 
