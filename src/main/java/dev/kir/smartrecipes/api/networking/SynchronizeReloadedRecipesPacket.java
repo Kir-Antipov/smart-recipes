@@ -49,7 +49,7 @@ public class SynchronizeReloadedRecipesPacket {
         ((ReloadableRecipeManager)recipeManager).apply(this.reloadedRecipes);
         RecipeBook recipeBook = client.player == null ? null : client.player.getRecipeBook();
         if (recipeBook != null) {
-            RecipeBookUtil.apply(recipeBook, this.reloadedRecipes);
+            RecipeBookUtil.apply(recipeBook, handler.getRegistryManager(), this.reloadedRecipes);
         }
     }
 

@@ -190,7 +190,7 @@ class RecipeManagerMixin implements ReloadableRecipeManager {
         }
 
         new SynchronizeReloadedRecipesPacket(diff).send(PlayerLookup.all(server).stream());
-        PlayerLookup.all(server).forEach(x -> RecipeBookUtil.apply(x.getRecipeBook(), diff));
+        PlayerLookup.all(server).forEach(x -> RecipeBookUtil.apply(x.getRecipeBook(), server.getRegistryManager(), diff));
     }
 
     @Unique

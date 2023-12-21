@@ -14,6 +14,7 @@ import net.minecraft.client.search.SearchManager;
 import net.minecraft.client.toast.RecipeToast;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.book.RecipeBook;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.network.ServerRecipeBook;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
@@ -21,11 +22,11 @@ import net.minecraft.util.Pair;
 import java.util.Collection;
 
 public final class RecipeBookUtil {
-    public static void apply(RecipeBook recipeBook, Collection<Pair<ReloadableRecipeManager.RecipeState, RecipeInfo>> diff) {
-        apply(recipeBook, diff, false);
+    public static void apply(RecipeBook recipeBook, DynamicRegistryManager registryManager, Collection<Pair<ReloadableRecipeManager.RecipeState, RecipeInfo>> diff) {
+        apply(recipeBook, registryManager, diff, false);
     }
 
-    public static void apply(RecipeBook recipeBook, Collection<Pair<ReloadableRecipeManager.RecipeState, RecipeInfo>> diff, boolean showRecipeToasts) {
+    public static void apply(RecipeBook recipeBook, DynamicRegistryManager registryManager, Collection<Pair<ReloadableRecipeManager.RecipeState, RecipeInfo>> diff, boolean showRecipeToasts) {
         if (diff.isEmpty()) {
             return;
         }
@@ -49,12 +50,12 @@ public final class RecipeBookUtil {
         }
 
         if (isClient) {
-            refreshRecipeBook(recipeBook);
+            refreshRecipeBook(recipeBook, registryManager);
         }
     }
 
     @Environment(EnvType.CLIENT)
-    private static void refreshRecipeBook(RecipeBook recipeBook) {
+    private static void refreshRecipeBook(RecipeBook recipeBook, DynamicRegistryManager registryManager) {
         if (!(recipeBook instanceof ClientRecipeBook clientRecipeBook)) {
             return;
         }
@@ -62,7 +63,7 @@ public final class RecipeBookUtil {
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayNetworkHandler network = MinecraftClient.getInstance().getNetworkHandler();
         if (network != null) {
-            clientRecipeBook.reload(network.getRecipeManager().values());
+            clientRecipeBook.reload(network.getRecipeManager().values(), registryManager);
             for (RecipeResultCollection collection : clientRecipeBook.getOrderedResults()) {
                 collection.initialize(clientRecipeBook);
             }
