@@ -2,9 +2,9 @@ package dev.kir.smartrecipes.api.networking;
 
 import com.google.gson.JsonObject;
 import dev.kir.smartrecipes.SmartRecipes;
+import dev.kir.smartrecipes.api.RecipeInfo;
 import dev.kir.smartrecipes.api.ReloadableRecipeManager;
 import dev.kir.smartrecipes.util.recipe.RecipeBookUtil;
-import dev.kir.smartrecipes.api.RecipeInfo;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -17,10 +17,10 @@ import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.book.RecipeBook;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -67,27 +67,27 @@ public class SynchronizeReloadedRecipesPacket {
             T recipe = (T)recipeInfo.getRecipe().orElseThrow(() -> new IllegalArgumentException("Unable to parse recipe '" + recipeInfo.getRecipeId() + "'"));
 
             buf.writeBoolean(true);
-            buf.writeIdentifier(Registry.RECIPE_SERIALIZER.getId(recipe.getSerializer()));
+            buf.writeIdentifier(Registries.RECIPE_SERIALIZER.getId(recipe.getSerializer()));
             buf.writeIdentifier(recipe.getId());
             ((RecipeSerializer<T>)recipe.getSerializer()).write(buf, recipe);
         } else {
             buf.writeBoolean(false);
             buf.writeIdentifier(recipeInfo.getRecipeId());
-            buf.writeIdentifier(Registry.RECIPE_TYPE.getId(recipeInfo.getRecipeType().orElseThrow(() -> new IllegalArgumentException("Recipe '" + recipeInfo.getRecipeId() + "' uses invalid or unsupported recipe type"))));
+            buf.writeIdentifier(Registries.RECIPE_TYPE.getId(recipeInfo.getRecipeType().orElseThrow(() -> new IllegalArgumentException("Recipe '" + recipeInfo.getRecipeId() + "' uses invalid or unsupported recipe type"))));
         }
     }
 
     private static Pair<ReloadableRecipeManager.RecipeState, RecipeInfo> readRecipeEntry(PacketByteBuf buf) {
         if (buf.readBoolean()) {
             Identifier serializerId = buf.readIdentifier();
-            RecipeSerializer<?> serializer = Registry.RECIPE_SERIALIZER.getOrEmpty(serializerId).orElseThrow(() -> new IllegalArgumentException("Unknown recipe serializer " + serializerId));
+            RecipeSerializer<?> serializer = Registries.RECIPE_SERIALIZER.getOrEmpty(serializerId).orElseThrow(() -> new IllegalArgumentException("Unknown recipe serializer " + serializerId));
             Identifier recipeId = buf.readIdentifier();
             Recipe<?> recipe = serializer.read(recipeId, buf);
             return new Pair<>(ReloadableRecipeManager.RecipeState.KEEP, new SerializableRecipeInfo(recipeId, recipe));
         } else {
             Identifier recipeId = buf.readIdentifier();
             Identifier recipeTypeId = buf.readIdentifier();
-            RecipeType<?> recipeType = Registry.RECIPE_TYPE.getOrEmpty(recipeTypeId).orElseThrow(() -> new IllegalArgumentException("Invalid or unsupported recipe type '" + recipeTypeId + "'"));
+            RecipeType<?> recipeType = Registries.RECIPE_TYPE.getOrEmpty(recipeTypeId).orElseThrow(() -> new IllegalArgumentException("Invalid or unsupported recipe type '" + recipeTypeId + "'"));
             return new Pair<>(ReloadableRecipeManager.RecipeState.REMOVE, new SerializableRecipeInfo(recipeId, recipeType));
         }
     }

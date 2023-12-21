@@ -1,8 +1,8 @@
 package dev.kir.smartrecipes.api;
 
+import net.minecraft.registry.Registry;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 public interface RecipeReloadCondition {

@@ -8,15 +8,15 @@ import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.util.registry.SimpleRegistry;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.SimpleRegistry;
 
 import java.util.function.BiConsumer;
 
 final class RecipeReloadConditions {
     public static final RegistryKey<Registry<RecipeReloadCondition>> KEY = RegistryKey.ofRegistry(SmartRecipes.locate("recipe_reload_condition"));
-    public static final Registry<RecipeReloadCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental(), null);
+    public static final Registry<RecipeReloadCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental());
 
 
     public static final RecipeReloadCondition END_DATA_PACK_RELOAD = create(ServerLifecycleEvents.END_DATA_PACK_RELOAD, ServerLifecycleEvents.SERVER_STARTED, (e, c) -> e.register((s, __, ___) -> c.invoker().onRecipeReloadEvent(s, c.getId())), (e, c) -> e.register(s -> c.invoker().onRecipeReloadEvent(s, c.getId())));

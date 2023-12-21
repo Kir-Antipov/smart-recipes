@@ -8,10 +8,11 @@ import dev.kir.smartrecipes.util.world.TimeOfDay;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.api.metadata.version.VersionPredicate;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.util.registry.SimpleRegistry;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.WorldProperties;
@@ -24,7 +25,7 @@ import java.util.stream.StreamSupport;
 
 final class RecipeConditions {
     public static final RegistryKey<Registry<RecipeCondition>> KEY = RegistryKey.ofRegistry(SmartRecipes.locate("recipe_condition"));
-    public static final Registry<RecipeCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental(), null);
+    public static final Registry<RecipeCondition> REGISTRY = new SimpleRegistry<>(KEY, Lifecycle.experimental());
 
 
     public static final RecipeCondition FALSE = (e, i) -> false;
@@ -151,15 +152,15 @@ final class RecipeConditions {
 
 
     public static final RecipeCondition ENTRIES_REGISTERED = (e, i) -> JsonUtil.flatMap(e, RegistryEntry::parse, RegistryEntry::parse).allMatch(x -> {
-        Registry<?> registry = Registry.REGISTRIES.get(new Identifier(x.registry()));
+        Registry<?> registry = Registries.REGISTRIES.get(new Identifier(x.registry()));
         return registry != null && registry.containsId(new Identifier(x.entry()));
     });
 
-    public static final RecipeCondition BLOCKS_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registry.BLOCK.containsId(new Identifier(x.getAsString())));
+    public static final RecipeCondition BLOCKS_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registries.BLOCK.containsId(new Identifier(x.getAsString())));
 
-    public static final RecipeCondition ITEMS_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registry.ITEM.containsId(new Identifier(x.getAsString())));
+    public static final RecipeCondition ITEMS_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registries.ITEM.containsId(new Identifier(x.getAsString())));
 
-    public static final RecipeCondition BLOCK_ENTITIES_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registry.BLOCK_ENTITY_TYPE.containsId(new Identifier(x.getAsString())));
+    public static final RecipeCondition BLOCK_ENTITIES_REGISTERED = (e, i) -> JsonUtil.flatMap(e).allMatch(x -> Registries.BLOCK_ENTITY_TYPE.containsId(new Identifier(x.getAsString())));
 
 
     public static final RecipeCondition MODS_LOADED = (e, i) -> JsonUtil.flatMap(e, ModEntry::parse, ModEntry::parse).allMatch(x -> {
@@ -197,7 +198,7 @@ final class RecipeConditions {
     }
 
     private static Difficulty parseDifficulty(JsonPrimitive jsonPrimitive) {
-        return jsonPrimitive.isNumber() ? Difficulty.byOrdinal(jsonPrimitive.getAsInt()) : Difficulty.byName(jsonPrimitive.getAsString().toLowerCase());
+        return jsonPrimitive.isNumber() ? Difficulty.byId(jsonPrimitive.getAsInt()) : Difficulty.byName(jsonPrimitive.getAsString().toLowerCase());
     }
 
     private static GameMode parseGameMode(JsonPrimitive jsonPrimitive) {

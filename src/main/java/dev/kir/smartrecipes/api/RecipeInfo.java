@@ -5,8 +5,8 @@ import com.google.gson.JsonPrimitive;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Contract;
 
 import java.util.Optional;
@@ -39,7 +39,7 @@ public class RecipeInfo {
             String type = this.recipeObject.get("type") instanceof JsonPrimitive typePrimitive && typePrimitive.isString() ? typePrimitive.getAsString() : null;
             Identifier id = type == null ? null : Identifier.tryParse(type);
             if (id != null) {
-                this.recipeType = Registry.RECIPE_TYPE.getOrEmpty(id).or(() -> Registry.RECIPE_TYPE.getOrEmpty(new Identifier(id.getNamespace(), id.getPath().split("_")[0]))).orElse(null);
+                this.recipeType = Registries.RECIPE_TYPE.getOrEmpty(id).or(() -> Registries.RECIPE_TYPE.getOrEmpty(new Identifier(id.getNamespace(), id.getPath().split("_")[0]))).orElse(null);
             }
         }
         return Optional.ofNullable(this.recipeType);
