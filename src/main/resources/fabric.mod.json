@@ -25,7 +25,7 @@
   ],
   "accessWidener": "smart-recipes.accesswidener",
   "custom": {
-    "modmanager": {
+    "mc-publish": {
       "modrinth": "9a4QRg8h",
       "curseforge": 522139
     }
